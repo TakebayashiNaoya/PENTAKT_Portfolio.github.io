@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ポートフォリオ.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+ <img src="Assets/PENTAKT.png" width="600">
+<hr>
+<h2 id="自己紹介">自己紹介</h2>
+<h3 id="氏名竹林尚哉たけばやしなおや">氏名：竹林尚哉（たけばやしなおや）</h3>
+ <img src="Assets/Takebayashi.png" width="300">
+<p>本校に入学する前は、3年間溶接工として働いておりました。<br>
+将来のキャリアを考えたとき、やはり好きなことを仕事にしたいと考え、ゲームプログラマーを目指すようになりました。</p>
+<p><strong>趣味</strong> : ドライブ、旅行<br>
+<strong>特技</strong> : 溶接<br>
+<strong>休日の過ごし方</strong> : 積みゲーの消化、ネッ友とゲーム<br>
+<strong>好きなゲームジャンル</strong> : MMO、FPS、RPG、謎解き、サンドボックス、レース<br>
+<strong>最近遊んだゲーム</strong> : ぽこあポケモン、ドラゴンクエストVII Reimagined、サブノーティカ2、REPO</p>
+<p><strong>長所</strong> :</p>
+<ul>
+<li><strong>行動力</strong> : 何をするにしても動き出しが速く、躊躇いがありません。試行回数が増える分、リカバリーも速いです。</li>
+<li><strong>正直者</strong> : 言い訳や嘘をつくのが嫌い（できない）です。そのため、前職でも信用して仕事を任せていただいていました。</li>
+<li><strong>大体なんとかできる</strong> : 時間がなくても大体なんとかできます。前職では「間に合わないはありえない」と口癖のように言われてきました。そのような環境に身を置いたことで、「間に合わない」のではなく「間に合わせようとしていない」だけだと気付きました。それ以降、緊急の仕事が舞い込んできても、きちんと期日までに終わらせてきました。</li>
+</ul>
+<h2 id="目次">目次</h2>
+<ul>
+<li><a href="#1-%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E6%A6%82%E8%A6%81">1. プロジェクト概要</a>
+<ul>
+<li><a href="#%E4%BD%9C%E5%93%81%E6%A6%82%E8%A6%81">作品概要</a></li>
+<li><a href="#%E3%82%B2%E3%83%BC%E3%83%A0%E5%86%85%E5%AE%B9">ゲーム内容</a></li>
+<li><a href="#%E6%8B%85%E5%BD%93%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89">担当ソースコード</a></li>
+</ul>
+</li>
+<li><a href="#2-physics%E5%AE%9F%E8%A3%85">2. Physics実装</a>
+<ul>
+<li><a href="#ghostbody">GhostBody</a></li>
+<li><a href="#charactercontroller">CharacterController</a></li>
+</ul>
+</li>
+<li><a href="#3-%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A3%85">3. グラフィックス・レンダリング実装</a>
+<ul>
+<li><a href="#%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3">レンダリングパイプライン</a></li>
+<li><a href="#pbr%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">PBRレンダリング</a></li>
+<li><a href="#%E3%83%9D%E3%82%B9%E3%83%88%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88%E3%83%96%E3%83%AB%E3%83%BC%E3%83%A0">ポストエフェクト（ブルーム）</a></li>
+<li><a href="#%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%88%E3%82%B7%E3%82%A7%E3%83%BC%E3%83%80%E3%83%BC%E6%B5%B7%E6%B8%A6%E6%BD%AE">コンピュートシェーダー（海・渦潮）</a></li>
+</ul>
+</li>
+<li><a href="#4-%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E6%9C%80%E9%81%A9%E5%8C%96%E3%81%9D%E3%81%AE%E4%BB%96%E6%A9%9F%E8%83%BD">4. パフォーマンス最適化・その他機能</a>
+<ul>
+<li><a href="#%E3%83%95%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%AB%E3%83%AA%E3%83%B3%E3%82%B0">フラスタムカリング</a></li>
+<li><a href="#%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E9%9D%9E%E5%90%8C%E6%9C%9F%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF">リソースの非同期読み込み</a></li>
+<li><a href="#%E3%83%87%E3%82%A3%E3%82%B6%E3%83%AA%E3%83%B3%E3%82%B0">ディザリング</a></li>
+</ul>
+</li>
+<li><a href="#5-%E9%96%8B%E7%99%BA%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%83%9C%E3%83%84%E6%A1%88">5. 開発プロセス・ボツ案</a>
+<ul>
+<li><a href="#%E6%9C%AA%E4%BD%BF%E7%94%A8%E6%A9%9F%E8%83%BD">未使用機能</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="1-プロジェクト概要">1. プロジェクト概要</h2>
+<h3 id="作品概要">作品概要</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>タイトル</td>
+<td>ぺんたくと</td>
+</tr>
+<tr>
+<td>制作人数</td>
+<td>4人</td>
+</tr>
+<tr>
+<td>製作期間</td>
+<td>2026年2月～現在</td>
+</tr>
+<tr>
+<td>ゲームジャンル</td>
+<td>3Dアクション</td>
+</tr>
+<tr>
+<td>プレイ人数</td>
+<td>1</td>
+</tr>
+<tr>
+<td>対応ハード</td>
+<td>PC (Windows 11) / Xbox コントローラー</td>
+</tr>
+<tr>
+<td>使用言語</td>
+<td>C++</td>
+</tr>
+<tr>
+<td>エンジン</td>
+<td>BeastEngine（学校内製エンジン（k2EngineLow） / DirectX12）</td>
+</tr>
+<tr>
+<td>使用ツール</td>
+<td>Visual Studio 2026<br>Visual Studio CodeAdobe<br>Photoshop 2026<br>3dsMax 2026<br>Effekseer<br>GitHub<br>Fork</td>
+</tr>
+<tr>
+<td>GitHub URL</td>
+<td>https://github.com/TakebayashiNaoya/ProjectBeast</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ゲーム内容">ゲーム内容</h3>
+<p>親ペンギンを操作し、制限時間内に子ペンギンを集めたり、アチーブメントを達成することで、ハイスコアを狙うゲームです。<br>
+個性的な子ペンギンたちに、煩わしさや可愛らしさを感じられるゲームを目指しました。</p>
+ <img src="Assets/InGame.png" width="600">
+ <img src="Assets/Result.png" width="600">
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<h3 id="担当ソースコード">担当ソースコード</h3>
+<details>
+<summary>エンジン（BeastEngine）</summary>
+<ul>
+<li>BeastEngine/
+<ul>
+<li>Geomatry/
+<ul>
+<li>Frustum (.cpp / .h)</li>
+<li>TriangleCuller (.cpp / .h)</li>
+</ul>
+</li>
+<li>Graphics/
+<ul>
+<li>Effect/
+<ul>
+<li>BeastEffectEmitter (.cpp / .h)</li>
+</ul>
+</li>
+<li>Light/
+<ul>
+<li>HemisphereLight (.cpp / .h)</li>
+<li>PointLight (.cpp / .h)</li>
+<li>SceneLight (.cpp / .h)</li>
+<li>SpotLight (.cpp / .h)</li>
+</ul>
+</li>
+<li>PostEffect/
+<ul>
+<li>Bloom (.cpp / .h)</li>
+<li>GaussianBlur (.cpp / .h)</li>
+<li>PostEffectManager (.cpp / .h)</li>
+<li>PostEffectTypes (.h)</li>
+</ul>
+</li>
+<li>BeastMeshParts (.cpp / .h)</li>
+<li>BeastModel (.cpp / .h)</li>
+<li>FontRender (.cpp / .h)</li>
+<li>GraphicsEnums (.h)</li>
+<li>IRenderer (.h)</li>
+<li>ModelRender (.cpp / .h)</li>
+<li>MyRenderer (.h)</li>
+<li>OcclusionDitherManager (.cpp / .h)</li>
+<li>RenderingEngine (.cpp / .h)</li>
+<li>SpriteRender (.cpp / .h)</li>
+</ul>
+</li>
+<li>Nature/
+<ul>
+<li>INatureObject (.h)</li>
+<li>SkyCube (.cpp / .h)</li>
+</ul>
+</li>
+<li>Physics/
+<ul>
+<li>BoundingVolume (.cpp / .h)</li>
+<li>BoxCollider (.cpp / .h)</li>
+<li>BroadphaseImpl (.cpp / .h)</li>
+<li>BroadphaseInterface (.cpp / .h)</li>
+<li>CapsuleCollider (.cpp / .h)</li>
+<li>CharacterController (.cpp / .h)</li>
+<li>CollisionAttr (.h)</li>
+<li>DebugWireframe (.cpp / .h)</li>
+<li>GhostBody (.cpp / .h)</li>
+<li>GhostBodyManager (.cpp / .h)</li>
+<li>GhostPrimitive (.cpp / .h)</li>
+<li>ICollider (.h)</li>
+<li>MeshCollider (.cpp / .h)</li>
+<li>PhysicalBody (.cpp / .h)</li>
+<li>Physics (.cpp / .h)</li>
+<li>RigidBody (.cpp / .h)</li>
+<li>SphereCollider (.cpp / .h)</li>
+<li>Types (.h)</li>
+</ul>
+</li>
+<li>Resource/
+<ul>
+<li>AnimationClipResource (.cpp / .h)</li>
+<li>ModelResource (.cpp / .h)</li>
+<li>ResourceManager (.cpp / .h)</li>
+<li>SkeletonResource (.h)</li>
+</ul>
+</li>
+<li>BeastEngine (.cpp / .h)</li>
+<li>BeastEnginePreCompile (.cpp / .h)</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>ゲーム（Game/Source）</summary>
+<ul>
+<li>Game/Source/
+<ul>
+<li>Graphics/
+<ul>
+<li>PBRStatus (.cpp / .h)</li>
+<li>PBRParameter (.cpp / .h)</li>
+</ul>
+</li>
+<li>Nature/
+<ul>
+<li>Ocean (.cpp / .h)</li>
+<li>OceanParameter (.h)</li>
+<li>Whirlpool (.cpp / .h)</li>
+<li>WhirlpoolManager (.cpp / .h)</li>
+<li>WhirlpoolParameter (.h)</li>
+</ul>
+</li>
+<li>Noise/
+<ul>
+<li>NoiseManager (.cpp / .h)</li>
+</ul>
+</li>
+<li>UI/Menu/
+<ul>
+<li>Tutorial (.cpp / .h)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>シェーダー（Game/Assets/shader）</summary>
+<ul>
+<li>Game/Assets/shader/
+<ul>
+<li>PostEffect/
+<ul>
+<li>bloom.fx</li>
+<li>blur.fx</li>
+<li>kawaseBloom.fx</li>
+</ul>
+</li>
+<li>debugWireFrame.fx</li>
+<li>DeferredLighting.fx</li>
+<li>DeferredLighting_cav_register.h</li>
+<li>DeferredLighting_srv_uav_register.h</li>
+<li>DrawVolumeLight.fx</li>
+<li>IBL.h</li>
+<li>model.fx</li>
+<li>model_srv_uav_register.h</li>
+<li>ModelVSCommon.h</li>
+<li>Ocean.fx</li>
+<li>OceanWaveCS.hlsl</li>
+<li>outline.fx</li>
+<li>RenderToGBuffer.fx</li>
+<li>Sampler.h</li>
+<li>SkyCubeMap.fx</li>
+<li>sprite.fx</li>
+<li>toon.fx</li>
+<li>Whirlpool.fx</li>
+</ul>
+</li>
+</ul>
+</details>
+<details>
+<summary>パラメーター（Game/Assets/parameter）</summary>
+<ul>
+<li>Game/Assets/parameter/
+<ul>
+<li>Graphics/
+<ul>
+<li>PBRParameter.json</li>
+</ul>
+</li>
+<li>nature/
+<ul>
+<li>oceanParameter.json</li>
+<li>whirlpoolParameter.json</li>
+</ul>
+</li>
+<li>Tutorial/
+<ul>
+<li>Tutorial.json</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</details>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h2 id="2-physics実装">2. Physics実装</h2>
+<h3 id="ghostbody">GhostBody</h3>
+<p>BulletPhysicsには、物理的に押し返さず重なりだけを検知する <code>btGhostObject</code> という仕組みがあります。<br>
+攻撃のダメージ判定や敵の索敵範囲など、<strong>「すり抜けるが、接触だけ検知したい」</strong> 処理にはこれが適しています。<br>
+しかし <code>btGhostObject</code> をゲームコードから直接扱うと、生成・破棄のタイミング管理や衝突属性のフィルタリング、判定後の通知といった処理をすべてバラバラに書く必要があり、コードが煩雑になることがわかりました。<br>
+そこで <code>btGhostObject</code> をラップし、これらをまとめて管理する <strong><code>GhostBody</code></strong> システムを自作しました。<br>
+また、<code>GhostBody</code> の形状として使用している <code>CapsuleCollider</code> / <code>BoxCollider</code> / <code>SphereCollider</code> / <code>MeshCollider</code> といったコライダークラスも自作していますが、これらはUnityの同名クラスを意識した命名にしています。<br>
+チームメンバーが役割をすぐに把握できるよう、あえて既存エンジンと揃えました。</p>
+<h4 id="1-bvhによる広域判定で計算量を削減">1. BVHによる広域判定で計算量を削減</h4>
+ <img src="Assets/BVH.png" width="600">
+<p>すべての GhostBody 同士をO(n²)で調べると、オブジェクト数が増えたときに処理落ちしてしまいます。<br>
+そこで判定を2段階に分けました。<br>
+1段階目は 広域判定（Broadphase） で、BVH（Bounding Volume Hierarchy）の一種であるDynamic AABB Tree（btDbvt）を使って <strong>「近くにいる可能性があるペア」</strong> だけを絞り込みます。<br>
+各 GhostBody をAABBで包んでツリー構造に登録しておくことで、ツリーを再帰的に辿るだけで遠いペアをまとめて除外でき、O(n²)の総当たりを避けられます。<br>
+2段階目の詳細判定に進む前にも、両者の包含球（BoundingRadius）の半径の和と距離を比較して届いていなければ即スキップする早期リターンを挟み、重い計算が走るケースをさらに減らしています。</p>
+<h4 id="2-ビット演算による衝突属性の管理">2. ビット演算による衝突属性の管理</h4>
+<p>オブジェクトの種類が増えると「誰と誰が当たるか」の管理が煩雑になります。<br>
+これを解決するため、各 <code>GhostBody</code> に <strong>Attribute</strong>（自分の種別）と <strong>Mask</strong>（当たりたい相手の種別）をビットフラグで持たせました。<br>
+<code>(a-&gt;GetMask() &amp; b-&gt;GetAttribute()) &amp;&amp; (b-&gt;GetMask() &amp; a-&gt;GetAttribute())</code> という1行で相互フィルタリングが完結するようにし、新しい種別を追加しても既存の判定ロジックに手を加える必要がないようにしました。</p>
+<h4 id="3-ghostbodyの登録解除を自動化">3. GhostBodyの登録・解除を自動化</h4>
+<p><code>GhostBody</code> の生成タイミングと <code>GhostBodyManager</code> への登録タイミングがずれると、判定漏れやダングリングポインタの原因になります。<br>
+これを防ぐため、<strong><code>CreateCore()</code> 内で <code>GhostBodyManager::AddBody()</code> を呼んで自動登録し、デストラクタで <code>RemoveBody()</code> を呼んで自動解除</strong>する設計にしました。<br>
+形状データも <code>std::unique_ptr&lt;IGhostShape&gt;</code> で保持し、形状を差し替えた際の古いメモリ解放も自動で行われるようにしました。</p>
+<h4 id="4-判定と後処理の分離">4. 判定と後処理の分離</h4>
+<p>衝突判定のループ内でダメージ処理や座標変更を直接行うと、同一フレームで複数回ヒットが検出された際に処理の二重適用が起きるリスクがあります。<br>
+そこで <code>GhostBodyManager</code> 内では<strong>当たったペアの情報をコールバック（<code>registerPairCallback_</code>）として外部に通知するだけ</strong>にとどめ、具体的な後処理は呼び出し側で行う設計にしました。<br>
+これにより判定フェーズと処理フェーズを明確に分離し、順序依存のバグが起きにくくしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="charactercontroller">CharacterController</h3>
+<p>キャラクターが壁や床と正しく衝突しながら移動できるよう、<strong><code>CharacterController</code></strong> を自作しました。<br>
+なお、<code>CharacterController</code> や内部で使用している <code>CapsuleCollider</code> / <code>RigidBody</code> / <code>RaycastHit</code> といったクラス名は、Unityの同名クラスを意識した命名にしています。チームメンバーがUnityの知識を持っていることが多いため、役割をすぐに把握できるよう、あえて既存エンジンと揃えました。<br>
+カプセル形状のコライダーと <code>btRigidBody</code> を組み合わせて物理空間に参加させており、移動の解決はすべて自前のロジックで行っています。</p>
+<h4 id="xz移動壁沿いスライド">XZ移動：壁沿いスライド</h4>
+ <img src="Assets/WallKick.gif" width="600">
+<p>XZ平面の移動では、<strong>Sweep Test</strong>（形状を空間上でスライドさせてどこで衝突するかを調べる処理）を使って壁との接触を検出します。<br>
+壁に当たった場合は、移動ベクトルから壁の法線方向の成分を打ち消すことで、<strong>壁に沿ってスムーズに滑る</strong>動きを実現しています。<br>
+また、コーナーに挟まってキャラクターがスタックしないよう、この処理を複数回繰り返す<strong>反復スライディング解決</strong>を採用しています。</p>
+<h4 id="y移動重力接地海面追従">Y移動：重力・接地・海面追従</h4>
+<p>垂直方向は毎フレーム重力加速度を加算し、下向きにスイープテストを行うことで床への接地を判定します。<br>
+同様に上向きのスイープテストで天井との衝突も検出しており、ジャンプ中に天井に頭をぶつけると垂直速度がリセットされます。<br>
+また、<code>SetSeaLevel()</code> で海面の高さを渡すことで、<strong>キャラクターが海面より下に沈まない</strong>ようにしています。<br>
+泳ぎ状態に切り替わると重力をOFFにし、波面の高さに追従する動きへとシームレスに切り替わります。</p>
+<h4 id="テレポート対応">テレポート対応</h4>
+<p><code>RequestTeleport()</code> を呼ぶと、次の <code>Execute()</code> で<strong>衝突判定を一切行わずに目標座標へ瞬間移動</strong>します。<br>
+これにより、ステージの切り替えやリスポーン処理など、強制的に座標を変えたい場面でも安全に対応できるようにしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h2 id="3-グラフィックスレンダリング実装">3. グラフィックス・レンダリング実装</h2>
+<h3 id="レンダリングパイプライン">レンダリングパイプライン</h3>
+<h4 id="フォワードレンダリング">フォワードレンダリング</h4>
+<p>まず最初にフォワードレンダリングのみで実装しました。<br>
+しかし、ライトの数が増えると、画面に映っていないピクセルに対してもライティング計算が走るため、<br>
+<strong>将来的にライトが増えた際に処理が重くなる</strong>という問題がありました。<br>
+それを解決するために、後述するディファードレンダリングも実装しました。<br>
+また、フォワードとディファードを両方実装することで<strong>それぞれの特性を比較・理解する</strong>という学習目的もありました。</p>
+<h4 id="ディファードレンダリング">ディファードレンダリング</h4>
+<p>フォワードレンダリングの問題を解決するため、またフォワードとの違いを学ぶため、ディファードレンダリングを実装しました。
+ディファードレンダリングでは、まずジオメトリパスで各オブジェクトの情報を <strong>GBuffer</strong> に書き込みます。</p>
+<table>
+<thead>
+<tr>
+<th>GBufferスロット</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>アルベド</td>
+<td>オブジェクトの色・深度</td>
+</tr>
+<tr>
+<td>法線</td>
+<td>ワールド空間の法線ベクトル</td>
+</tr>
+<tr>
+<td>メタリックスムース</td>
+<td>PBRパラメータ（metallic / smooth / ライト倍率）</td>
+</tr>
+</tbody>
+</table>
+<p>その後、ライティングパスでGBufferを参照して<strong>画面全体に対して1回だけ</strong>ライティング計算を行います。<br>
+これにより、将来的にライトの数が増えても処理コストが抑えられます。<br>
+メタリックスムースの枠には、もともとスペキュラーマップを入れていましたが、後述するPBRに差し換えました。</p>
+<h4 id="フォワードディファード-ハイブリッド構成">フォワード＋ディファード ハイブリッド構成</h4>
+<p>ディファードレンダリングには<strong>半透明オブジェクトの描画が苦手</strong>という欠点があります。<br>
+GBufferは1ピクセルにつき1つの情報しか持てないため、複数の半透明レイヤーを正しく合成できません。<br>
+そこで、以下のようなハイブリッド構成にしました。</p>
+<ul>
+<li><strong>不透明オブジェクト</strong> → ディファードレンダリングで描画</li>
+<li><strong>半透明オブジェクト・スカイキューブ等</strong> → フォワードレンダリングで描画</li>
+</ul>
+<p>オブジェクトはそれぞれ <code>m_deferredModelList</code> / <code>m_forwardModelList</code> に振り分けられ、描画パスが切り替わります。
+<code>SetForwardRendering(true)</code> を呼ぶことで、モデル単位でフォワード描画に切り替えることができるようにしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="pbrレンダリング">PBRレンダリング</h3>
+<table>
+<thead>
+<tr>
+<th>PBRあり</th>
+<th>PBRなし</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="Assets/PBR_ON.gif" width="600"></td>
+<td><img src="Assets/PBR_OFF.gif" width="600"></td>
+</tr>
+</tbody>
+</table>
+<p>見た目のクオリティを上げるため、<strong>PBR（物理ベースレンダリング）</strong> を実装しました。</p>
+<p>PBRは現実の光の物理法則に基づいてライティングを計算する手法です。<br>
+金属・非金属の質感を統一されたパラメータで表現できるため、リアルな見た目を実現することができました。</p>
+<p>実装には以下のモデルを使用しています。</p>
+<ul>
+<li><strong>拡散反射</strong>：正規化Lambertモデル + フレネル補正による拡散反射量の調整</li>
+<li><strong>鏡面反射</strong>：Cook-Torranceモデル（GGX法線分布・幾何減衰・フレネル反射）</li>
+<li><strong>パラメータ</strong>：metallic（金属度）/ smooth（滑らかさ）をGBufferに書き込み、ディファードライティングパスでまとめて計算</li>
+</ul>
+<p>また、モデルごとに <code>PBRParam</code> を設定することで、ディレクションライト強度・環境光強度・metallicオフセット・smoothオフセットを個別に調整できるようにしました。
+jsonを用いることで、プログラマー以外の方でも簡単に調整できるようにしています。</p>
+<pre class="hljs"><code><div>[
+  {
+    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Dummy&quot;</span>,
+    <span class="hljs-string">&quot;comment1&quot;</span>: <span class="hljs-string">&quot;dirLightScale(0.0〜∞): ディレクションライト強度倍率 （直接光が完全に消える（影側と同じ明るさになる）、1.0：デフォルト（SceneLightで設定した色そのまま）、2.0以上：白飛びに注意）&quot;</span>,
+    <span class="hljs-string">&quot;dirLightScale&quot;</span>: <span class="hljs-number">1.0</span>,
+    <span class="hljs-string">&quot;comment2&quot;</span>: <span class="hljs-string">&quot;ambientScale(0.0〜∞): 環境光強度倍率 （0.0：環境光なし（影側が真っ黒になる）、1.0：デフォルト、大きくするほど：影側が明るくなりフラットな見た目に近づく）&quot;</span>,
+    <span class="hljs-string">&quot;ambientScale&quot;</span>: <span class="hljs-number">1.0</span>,
+    <span class="hljs-string">&quot;comment3&quot;</span>: <span class="hljs-string">&quot;metallicOffset(-1.0〜1.0): メタリックオフセット （低いほど：非金属的になり、鏡面反射が白に近づく、0.0：デフォルト、高いほど：金属的な見た目になり、鏡面反射がアルベドカラーに近づく）&quot;</span>,
+    <span class="hljs-string">&quot;metallicOffset&quot;</span>: <span class="hljs-number">0.0</span>,
+    <span class="hljs-string">&quot;comment4&quot;</span>: <span class="hljs-string">&quot;smoothOffset(-1.0〜1.0): スムーズオフセット （低いほど：表面が粗くなり拡散反射が支配的になる（雪・布的）、0.0：デフォルト、高いほど：表面が滑らかになり鏡面反射が鋭くなる（金属・水面的））&quot;</span>,
+    <span class="hljs-string">&quot;smoothOffset&quot;</span>: <span class="hljs-number">0.0</span>
+  },
+  {
+    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;igloo&quot;</span>,
+    <span class="hljs-string">&quot;dirLightScale&quot;</span>: <span class="hljs-number">0.5</span>,
+    <span class="hljs-string">&quot;ambientScale&quot;</span>: <span class="hljs-number">1.5</span>,
+    <span class="hljs-string">&quot;metallicOffset&quot;</span>: <span class="hljs-number">1.0</span>,
+    <span class="hljs-string">&quot;smoothOffset&quot;</span>: <span class="hljs-number">1.0</span>
+  }
+]
+</div></code></pre>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="ポストエフェクトブルーム">ポストエフェクト（ブルーム）</h3>
+<table>
+<thead>
+<tr>
+<th>ブルームあり</th>
+<th>ブルームなし</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="Assets/Ocean_Bloom_ON.gif" width="600"></td>
+<td><img src="Assets/Ocean_Bloom_OFF.gif" width="600"></td>
+</tr>
+</tbody>
+</table>
+<p>見た目のクオリティをさらに上げるため、<strong>ブルーム</strong>を実装しました。<br>
+これにより、海の鏡面反射がキラキラと輝いて見えるようになりました。<br>
+海のシェーダーでは、スペキュラ値をHDR（1.0を超える値）として出力し、ブルームとの相性を良くしています。</p>
+<h4 id="処理フロー">処理フロー</h4>
+<ol>
+<li><strong>輝度抽出</strong>：メインレンダリングターゲットから、しきい値を超える明るいピクセルだけを抽出</li>
+<li><strong>ブラー</strong>：抽出した輝度テクスチャにブラーをかけてぼかす</li>
+<li><strong>加算合成</strong>：ぼかした結果をメインレンダリングターゲットに加算合成</li>
+</ol>
+<p>ブルームの種別は以下の2種類から切り替えられます。</p>
+<table>
+<thead>
+<tr>
+<th>種別</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>通常ブルーム</td>
+<td>輝度テクスチャを1段ブラーして合成</td>
+</tr>
+<tr>
+<td>川瀬式ブルーム</td>
+<td>解像度を段階的に半分に縮小しながら最大4段ブラーして平均合成。より広い発光表現が可能</td>
+</tr>
+</tbody>
+</table>
+<p>ブラーの種別も<strong>平均ブラー</strong>と<strong>ガウシアンブラー</strong>から選択できます。
+ガウシアンブラーは中心に近いほど重みが大きく、より自然なぼけを実現します。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="コンピュートシェーダー海渦潮">コンピュートシェーダー（海・渦潮）</h3>
+<h4 id="海">海</h4>
+ <img src="assets/Ocean_Bloom_OFF.gif" width="600">
+<p>海はC++で動的にグリッドメッシュを生成し、頂点を波のように動かすことでリアルな海面を表現しています。</p>
+<p>グリッドの分割数は <strong>128×128</strong> で、頂点数は約17,000個になります。<br>
+これらすべての頂点の波高さを毎フレームCPUで計算すると処理負荷が高くなるため、<strong>コンピュートシェーダー</strong>でGPU並列処理を行うようにしました。</p>
+ <img src="Assets/Wave.gif" width="600">
+<p>波の計算は2本のsin波を重ねた式で行います。</p>
+<ul>
+<li><strong>波①</strong>：X方向（speed倍率 1.0）</li>
+<li><strong>波②</strong>：斜め方向（X:0.6, Z:0.8、speed倍率 1.7）</li>
+</ul>
+<p>スレッドグループは <code>(8, 8, 1)</code> でディスパッチし、各スレッドが1頂点の波高さを <code>RWStructuredBuffer</code> に書き出します。<br>
+CPUにReadbackした波高さキャッシュは、チャンクAABBの構築にも活用しています。</p>
+<p>頂点シェーダー側でも同じ数式で波高さを計算し、隣接点との差分近似で法線を再構築しています。</p>
+<p>海もjsonでパラメーター調整できるようにしています。</p>
+<pre class="hljs"><code><div>[
+	{
+		<span class="hljs-string">&quot;baseReflectance&quot;</span>: <span class="hljs-number">0.0</span>,   <span class="hljs-comment">// 基本反射率</span>
+		<span class="hljs-string">&quot;wave1Amplitude&quot;</span>: <span class="hljs-number">5.0</span>,    <span class="hljs-comment">// 波①の振幅</span>
+		<span class="hljs-string">&quot;wave1Frequency&quot;</span>: <span class="hljs-number">0.025</span>,  <span class="hljs-comment">// 波①の空間周波数</span>
+		<span class="hljs-string">&quot;wave2Amplitude&quot;</span>: <span class="hljs-number">2.0</span>,    <span class="hljs-comment">// 波②の振幅</span>
+		<span class="hljs-string">&quot;wave2Frequency&quot;</span>: <span class="hljs-number">0.06</span>,   <span class="hljs-comment">// 波②の空間周波数</span>
+		<span class="hljs-string">&quot;specularPower&quot;</span>: <span class="hljs-number">50.0</span>,    <span class="hljs-comment">// スペキュラのPhong指数（大きいほどハイライトが絞られる）</span>
+		<span class="hljs-string">&quot;specularScale&quot;</span>: <span class="hljs-number">0.5</span>,     <span class="hljs-comment">// スペキュラ強度の倍率（0.0で照り返しを消せる）</span>
+		<span class="hljs-string">&quot;ambientScale&quot;</span>: <span class="hljs-number">2.0</span>       <span class="hljs-comment">// 海専用アンビエント強度倍率（他オブジェクトに影響しない）</span>
+	}
+]
+</div></code></pre>
+<h4 id="渦潮">渦潮</h4>
+ <img src="Assets/Whirlpool.gif" width="600">
+<p>渦潮はUV座標を中心（0.5, 0.5）基点で毎フレーム回転させることで、渦が回って見えるアニメーションを実現しました。<br>
+また、渦潮自体も円形グリッドメッシュで構成されており、毎フレーム <code>Ocean::SampleWaveHeight()</code> を呼び出して、<br>
+海の波高さキャッシュを参照することで、渦潮メッシュの各頂点Y座標を海面の高さに合わせています。<br>
+これにより、渦潮が波に乗って自然に揺れているように見えます。</p>
+<p>渦潮もjsonでパラメーター調整できるようにしています。</p>
+<pre class="hljs"><code><div>[
+    {
+        <span class="hljs-string">&quot;whirlpoolRadius&quot;</span>:      <span class="hljs-number">200.0</span>,  <span class="hljs-comment">// 渦潮の影響範囲半径</span>
+        <span class="hljs-string">&quot;attractSpeed&quot;</span>:         <span class="hljs-number">30.0</span>,   <span class="hljs-comment">// 引き寄せ速度（半径方向）</span>
+        <span class="hljs-string">&quot;rotateSpeed&quot;</span>:          <span class="hljs-number">3.0</span>,    <span class="hljs-comment">// 渦巻き回転速度（ラジアン/秒）</span>
+        <span class="hljs-string">&quot;uvRotationSpeed&quot;</span>:      <span class="hljs-number">1.5</span>,    <span class="hljs-comment">// UV回転速度（ラジアン/秒）</span>
+        <span class="hljs-string">&quot;scaleChangeTime&quot;</span>:      <span class="hljs-number">2.5</span>,    <span class="hljs-comment">// 渦潮の拡大率の変化にかかる時間</span>
+        <span class="hljs-string">&quot;stayTime&quot;</span>:             <span class="hljs-number">10.0</span>,   <span class="hljs-comment">// 渦潮の拡大率が最大値で留まる時間</span>
+        <span class="hljs-string">&quot;createInterval&quot;</span>:       <span class="hljs-number">2.0</span>,    <span class="hljs-comment">// 渦潮の生成間隔</span>
+        <span class="hljs-string">&quot;orbitRadius&quot;</span>:          <span class="hljs-number">80.0</span>,   <span class="hljs-comment">// 子ペンギンが落ち着く中心からの軌道半径</span>
+        <span class="hljs-string">&quot;orbitRadiusVariation&quot;</span>: <span class="hljs-number">20.0</span>,   <span class="hljs-comment">// 軌道半径のランダム変動最大幅（±この値）</span>
+        <span class="hljs-string">&quot;orbitOffsetVariation&quot;</span>: <span class="hljs-number">30.0</span>,   <span class="hljs-comment">// 個体ごとの軌道半径オフセットの最大幅（±この値）</span>
+        <span class="hljs-string">&quot;rotateScaleVariation&quot;</span>: <span class="hljs-number">0.3</span>     <span class="hljs-comment">// 個体ごとの回転速度倍率の変動幅（1.0 ± この値）</span>
+    }
+]
+</div></code></pre>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h2 id="4-パフォーマンス最適化その他機能">4. パフォーマンス最適化・その他機能</h2>
+<h3 id="フラスタムカリング">フラスタムカリング</h3>
+ <img src="Assets/FrustumCulling.gif" width="600">
+<p>※分かりやすくするために、デバッグ用にフラスタムの範囲を狭めています。<br>
+画面外のオブジェクトを描画しないようにするため、<strong>フラスタムカリング</strong>を実装しました。<br>
+ビュープロジェクション行列から6平面を抽出し、AABBやポリゴンとの交差判定を行います。</p>
+<table>
+<thead>
+<tr>
+<th>フラスタムカリングON</th>
+<th>フラスタムカリングOFF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="Assets/FPS_Fast.gif" width="600"></td>
+<td><img src="Assets/FPS_Slow.gif" width="600"></td>
+</tr>
+</tbody>
+</table>
+<p>スポーン直後でFPSを計測しました。<br>
+フラスタムカリングをONにすると、安定して144fpsが出ていますが、OFFにすると140fpsを下回ることが多々あります。</p>
+<h4 id="通常モデルの場合">通常モデルの場合</h4>
+<p>静的なモデル（ステージ等）は、<strong>メッシュの頂点座標からワールド空間のAABBを構築</strong>して粗判定し、<br>
+AABBが視錐台と交差している場合は、さらに <strong>トライアングルカリング</strong> によるポリゴン単位の細判定を行います。<br>
+これにより、1つのモデルでも画面に映っているポリゴンだけを描画できるようにしました。</p>
+<p>なお、アニメーションのあるモデルは、<strong>ボーンの座標からワールド空間のAABBを構築</strong>して判定します。<br>
+キャラクターモデルはサイズが小さいためフラスタムを跨ぐことも少なく、スキニングの再計算をするとCPUの負荷が高まるため、<br>
+トライアングルカリングは行っていません。</p>
+<h4 id="海の場合">海の場合</h4>
+<p>海は1つの巨大なグリッドオブジェクトで構成されています。<br>
+最初からポリゴン単位で判定するとCPUへの負荷が大きすぎるため、<strong>2段階</strong>でAABB判定しています。</p>
+<ol>
+<li><strong>チャンク単位のAABB判定</strong>：海を 8×8 のチャンクに分割し、視錐台と交差するチャンクだけを通過させる</li>
+<li><strong>セル単位のAABB判定</strong>：通過したチャンクをさらにセル単位で交差判定し、可視セルのみをGPUに送る</li>
+</ol>
+<p>チャンクのAABBのY範囲は、コンピュートシェーダーで計算した<strong>波高さキャッシュ</strong>から動的に構築します。<br>
+これにより、CPUとGPUの負荷バランスを適切に保ちながら描画コストを削減しています。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="リソースの非同期読み込み">リソースの非同期読み込み</h3>
+<img src="Assets/Load.gif" width="600">
+<p>BeastEngine に <strong><code>ResourceManager</code></strong> を実装し、</p>
+<ul>
+<li>モデル（tkm）</li>
+<li>スケルトン（tks）</li>
+<li>アニメーションクリップ（tka）</li>
+</ul>
+<p>のファイルIOをワーカースレッドで非同期に実行しています。<br>
+これにより、ロード画面を動かしつつ、裏でリソースの読み込みを行っています。</p>
+<h4 id="設計のポイント">設計のポイント</h4>
+<p>ファイルIO（重い処理）はワーカースレッドで行い、<br>
+バンク登録やオブジェクトの初期化（グローバル状態に触れる処理）はメインスレッドで行うという
+<strong>スレッドセーフな役割分担</strong>を意識して実装しました。</p>
+<pre class="hljs"><code><div>[ワーカースレッド]               [メインスレッド]
+ファイルIO（tkmの読み込みなど）  → IsReady() で完了を確認
+                                 → Finalize() でバンク登録・初期化
+</div></code></pre>
+<p>同じファイルパスへの2回目以降のリクエストはキャッシュから返るため、<strong>二重IOが発生しない</strong>設計になっています。</p>
+<h4 id="キャラクターへの適用">キャラクターへの適用</h4>
+<p><code>CharacterBase::Update()</code> 内でロード完了を毎フレーム確認し、完了後に <code>ModelRender</code> の初期化を行います。<br>
+ロード完了までの間もゲームループは止まらず、他のオブジェクトは通常通り動作します。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="ディザリング">ディザリング</h3>
+<img src="Assets/Dithering.gif" width="600">
+<p>カメラとプレイヤーの間にオブジェクトがある場合、プレイヤーが見えなくなってしまいます。<br>
+この問題を解決するために、ディザリングによる遮蔽オブジェクトの透過処理を実装しました。</p>
+<h4 id="実装の経緯">実装の経緯</h4>
+<p>最初は<strong>スイープテスト</strong>でカメラとプレイヤーの間にあるオブジェクトを検出する方法を試みました。
+しかし以下の問題が発生しました。</p>
+<ul>
+<li>オブジェクト全体が半透明になってしまう</li>
+<li>足元にあるオブジェクトまで半透明になってしまう</li>
+</ul>
+<h4 id="解決策円錐状のレイキャストによるピクセル単位判定">解決策：円錐状のレイキャストによるピクセル単位判定</h4>
+<p>そこで、<strong>カメラからプレイヤーに向かって円錐状にレイを飛ばし、遮蔽されているピクセルだけをピンポイントで透過</strong>する方法に変更しました。</p>
+<p>処理はGBufferへの書き込みシェーダー（<code>RenderToGBuffer.fx</code>）内で行います。</p>
+<ol>
+<li><strong>前後判定</strong>：フラグメントがカメラとプレイヤーの間にあるか判定</li>
+<li><strong>円錐内判定</strong>：カメラ→プレイヤー方向の視線から、フラグメントまでの距離が円錐の外側半径以内かを判定</li>
+<li><strong>フェード</strong>：内側半径（外側の70%）〜外側半径の範囲で <code>smoothstep</code> によるグラデーション</li>
+<li><strong>ディザリング</strong>：4×4 Bayerパターンを用いてピクセルを間引き、透過を表現</li>
+</ol>
+<p>これにより、プレイヤーと重なっている部分だけをピンポイントで透過でき、不要な半透明化が発生しなくなりました。<br>
+また、ディザリングはGBufferパスでピクセルを <code>clip()</code> で破棄するだけなので、<strong>ディファードレンダリングとの相性が良い</strong>という利点もあります。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h2 id="5-開発プロセスボツ案">5. 開発プロセス・ボツ案</h2>
+<h3 id="未使用機能">未使用機能</h3>
+<p>実装はしていますが、今作では使用していない機能です。</p>
+<h4 id="リムライト">リムライト</h4>
+<p><code>DeferredLighting.fx</code> 内に実装されており、ディレクションライトの計算結果に加算する形で組み込まれています。<br>
+現在は強度パラメータを調整することで無効化しています。</p>
+<h4 id="セルシェーダー">セルシェーダー</h4>
+<p>トゥーン用シェーダー（<code>toon.fx</code> / <code>outline.fx</code>）として実装されており、<code>ModelRender</code> の設定でモデル単位に有効化できます。<br>
+陰の段階数・閾値・輪郭線の太さと色を個別に設定可能です。<br>
+今作のアートスタイルには合わなかったため、使用していません。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+
+</body>
+</html>
