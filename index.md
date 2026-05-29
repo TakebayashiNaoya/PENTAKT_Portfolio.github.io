@@ -60,7 +60,8 @@
 | 使用言語 | C++ |
 | エンジン | BeastEngine（学校内製エンジン（k2EngineLow） / DirectX12） |
 | 使用ツール | Visual Studio 2026<br>Visual Studio CodeAdobe<br>Photoshop 2026<br>3dsMax 2026<br>Effekseer<br>GitHub<br>Fork |
-| GitHub URL | https://github.com/TakebayashiNaoya/ProjectBeast |
+| GitHub URL | [https://github.com/TakebayashiNaoya/ProjectBeast](https://github.com/TakebayashiNaoya/ProjectBeast) |
+| YouTube URL | [https://youtu.be/rVx5o2Aue9Y](https://youtu.be/rVx5o2Aue9Y) |
 
 ### ゲーム内容
 
