@@ -401,7 +401,7 @@ jsonを用いることで、プログラマー以外の方でも簡単に調整�
 
 #### 海
 
- <img src="assets/Ocean_Bloom_OFF.gif" width="600">
+ <img src="Assets/Ocean_Bloom_OFF.gif" width="600">
 
 海はC++で動的にグリッドメッシュを生成し、頂点を波のように動かすことでリアルな海面を表現しています。
 
