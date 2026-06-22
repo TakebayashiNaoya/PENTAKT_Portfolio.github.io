@@ -5,6 +5,228 @@
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
 /* Tomorrow Theme */
 /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
 /* Original theme - https://github.com/chriskempson/tomorrow-theme */
@@ -79,8 +301,61 @@
 	font-weight: bold;
 }
 </style>
-<link rel="stylesheet" href="style.css" type="text/css">
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
   <script>
@@ -130,6 +405,10 @@
 <li><a href="#pbr%E3%83%AC%E3%83%B3%E3%83%80%E3%83%AA%E3%83%B3%E3%82%B0">PBRレンダリング</a></li>
 <li><a href="#%E3%83%9D%E3%82%B9%E3%83%88%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88%E3%83%96%E3%83%AB%E3%83%BC%E3%83%A0">ポストエフェクト（ブルーム）</a></li>
 <li><a href="#%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%83%88%E3%82%B7%E3%82%A7%E3%83%BC%E3%83%80%E3%83%BC%E6%B5%B7%E6%B8%A6%E6%BD%AE">コンピュートシェーダー（海・渦潮）</a></li>
+<li><a href="#%E5%9C%B0%E5%BD%A2%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">地形システム</a></li>
+<li><a href="#sdf%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88">SDFフォント</a></li>
+<li><a href="#%E5%8B%95%E7%94%BB%E5%86%8D%E7%94%9F%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">動画再生システム</a></li>
+<li><a href="#%E3%82%B5%E3%83%96%E3%82%AB%E3%83%A1%E3%83%A9%E5%B0%8F%E7%AA%93%E6%8F%8F%E7%94%BB">サブカメラ（小窓描画）</a></li>
 </ul>
 </li>
 <li><a href="#4-%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E6%9C%80%E9%81%A9%E5%8C%96%E3%81%9D%E3%81%AE%E4%BB%96%E6%A9%9F%E8%83%BD">4. パフォーマンス最適化・その他機能</a>
@@ -137,6 +416,7 @@
 <li><a href="#%E3%83%95%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%AB%E3%83%AA%E3%83%B3%E3%82%B0">フラスタムカリング</a></li>
 <li><a href="#%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E9%9D%9E%E5%90%8C%E6%9C%9F%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF">リソースの非同期読み込み</a></li>
 <li><a href="#%E3%83%87%E3%82%A3%E3%82%B6%E3%83%AA%E3%83%B3%E3%82%B0">ディザリング</a></li>
+<li><a href="#%E5%8D%B1%E9%99%BA%E7%9F%A2%E5%8D%B0ui">危険矢印UI</a></li>
 </ul>
 </li>
 <li><a href="#5-%E9%96%8B%E7%99%BA%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%83%9C%E3%83%84%E6%A1%88">5. 開発プロセス・ボツ案</a>
@@ -222,9 +502,20 @@
 </li>
 <li>Graphics/
 <ul>
+<li>Camera/
+<ul>
+<li>CameraSystem (.cpp / .h)</li>
+<li>SubCameraManager (.cpp / .h)</li>
+</ul>
+</li>
 <li>Effect/
 <ul>
 <li>BeastEffectEmitter (.cpp / .h)</li>
+</ul>
+</li>
+<li>Font/
+<ul>
+<li>SDFFontEngine (.cpp / .h)</li>
 </ul>
 </li>
 <li>Light/
@@ -243,6 +534,14 @@
 <li>PostEffectTypes (.h)</li>
 </ul>
 </li>
+<li>Video/
+<ul>
+<li>VideoClip (.cpp / .h)</li>
+<li>VideoFrameTexture (.cpp / .h)</li>
+<li>VideoPlayer (.cpp / .h)</li>
+<li>VideoRender (.cpp / .h)</li>
+</ul>
+</li>
 <li>BeastMeshParts (.cpp / .h)</li>
 <li>BeastModel (.cpp / .h)</li>
 <li>FontRender (.cpp / .h)</li>
@@ -251,6 +550,7 @@
 <li>ModelRender (.cpp / .h)</li>
 <li>MyRenderer (.h)</li>
 <li>OcclusionDitherManager (.cpp / .h)</li>
+<li>RenderViewContext (.h)</li>
 <li>RenderingEngine (.cpp / .h)</li>
 <li>SpriteRender (.cpp / .h)</li>
 </ul>
@@ -302,10 +602,20 @@
 <ul>
 <li>Game/Source/
 <ul>
+<li>Actor/Stage/
+<ul>
+<li>TerrainObject (.cpp / .h)</li>
+</ul>
+</li>
+<li>GameLog/
+<ul>
+<li>GameLogManager (.cpp / .h)</li>
+</ul>
+</li>
 <li>Graphics/
 <ul>
-<li>PBRStatus (.cpp / .h)</li>
 <li>PBRParameter (.cpp / .h)</li>
+<li>PBRStatus (.cpp / .h)</li>
 </ul>
 </li>
 <li>Nature/
@@ -322,9 +632,31 @@
 <li>NoiseManager (.cpp / .h)</li>
 </ul>
 </li>
-<li>UI/Menu/
+<li>Scene/
 <ul>
-<li>Tutorial (.cpp / .h)</li>
+<li>EasyInGameScene (.h)</li>
+<li>HardInGameScene (.h)</li>
+<li>InGameSceneBase (.cpp / .h)</li>
+<li>NormalInGameScene (.h)</li>
+<li>TutorialController (.cpp / .h)</li>
+<li>TutorialInGameScene (.cpp / .h)</li>
+</ul>
+</li>
+<li>UI/
+<ul>
+<li>DangerArrow/
+<ul>
+<li>DangerArrowCalc (.h)</li>
+<li>DangerArrowMenu (.cpp / .h)</li>
+<li>DangerArrowSystem (.cpp / .h)</li>
+</ul>
+</li>
+<li>Menus/
+<ul>
+<li>TutorialMenu (.cpp / .h)</li>
+<li>TutorialWindowMenu (.cpp / .h)</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -357,8 +689,10 @@
 <li>outline.fx</li>
 <li>RenderToGBuffer.fx</li>
 <li>Sampler.h</li>
+<li>SDFFont.fx</li>
 <li>SkyCubeMap.fx</li>
 <li>sprite.fx</li>
+<li>Terrain.fx</li>
 <li>toon.fx</li>
 <li>Whirlpool.fx</li>
 </ul>
@@ -638,6 +972,104 @@ CPUにReadbackした波高さキャッシュは、チャンクAABBの構築に�
 </div></code></pre>
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 <hr>
+<h3 id="地形システム">地形システム</h3>
+<p>|  <img src="Assets/TutorialStageHeightMap.png" width="300"> | <img src="Assets/TutorialStageSplatMap.png" width="300"> | <img src="Assets/TutorialStage.png" width="600"> |</p>
+<p>ハイトマップから地形メッシュをCPU側で動的生成し、スプラットマップで複数テクスチャをブレンドする地形システムを実装しました。</p>
+<h4 id="1-ハイトマップからのメッシュ生成">1. ハイトマップからのメッシュ生成</h4>
+<p>DirectXTexライブラリでDDS（R16_UNORM形式）のハイトマップを読み込み、各ピクセルの輝度値を <code>pixel / 65535.0f × heightScale</code> でワールド高さに変換します。<br>
+変換した高さ値を格納した頂点バッファをCPU上で構築し、<code>TkmFile</code> としてリソースバンクに登録することで、エンジンの既存描画パスにそのまま流し込むことができます。<br>
+<code>subsample</code> パラメーターで解像度を落とすことで、ポリゴン数とクオリティのバランスを場面ごとに調整できます。</p>
+<h4 id="2-スプラットマップによるテクスチャブレンド">2. スプラットマップによるテクスチャブレンド</h4>
+<p>地形テクスチャの塗り分けにはスプラットマップ（R=雪・G=草・B=岩）を使用しています。<br>
+シェーダー（<code>Terrain.fx</code>）側でスプラットマップのRGB値をウェイトとして読み取り、3種のアルベドテクスチャを加重平均で合成します。<br>
+さらに各テクスチャにノーマルマップとラフネスマップを紐付けることで、既存のPBRライティングパスが地形でも正しく機能するようにしました。</p>
+<h4 id="3-チャンク単位のフラスタムカリング">3. チャンク単位のフラスタムカリング</h4>
+<p>地形全体を一枚のメッシュとして扱うと、地形が巨大な場合に描画コストが高くなります。<br>
+そこで地形をチャンク単位（<code>chunkDivision × chunkDivision</code>）に分割し、それぞれに独立した <code>ModelRender</code> を割り当てました。<br>
+毎フレームのフラスタムカリングでチャンクAABBと視錐台の交差判定を行い、<strong>画面に映っているチャンクのみGPUに送る</strong>ことで、地形の描画コストを抑えています。</p>
+<h4 id="4-物理コリジョン">4. 物理コリジョン</h4>
+<p>描画用のチャンクメッシュとは別に、フルメッシュから <code>PhysicalBody</code> のコリジョンを生成しています。<br>
+これにより、プレイヤーや子ペンギンが地形の起伏に正しく乗り上げることができます。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="sdfフォント">SDFフォント</h3>
+<p>デフォルトの <code>Font</code> クラスではビットマップフォントを使用しており、拡大するとピクセルが荒れる問題がありました。<br>
+これを解決するため、<strong>SDF（Signed Distance Field）フォント</strong>を実装しました。</p>
+<h4 id="仕組み">仕組み</h4>
+<p>SDF方式では、各グリフを「文字の輪郭からの距離」を格納したテクスチャ（SDFアトラス）として表現します。<br>
+カスタムピクセルシェーダー（<code>SDFFont.fx</code>）側でこの距離値をしきい値で切り分けることで、<strong>どの解像度・スケールでも鮮明な文字</strong>を描画できます。</p>
+<h4 id="実装の流れ">実装の流れ</h4>
+<img src="Assets/sdf_atlas.png" width="300">
+<ol>
+<li><strong>アトラス生成</strong>：<code>msdf-atlas-gen</code> ツールで使用文字のSDFアトラス（PNG）とグリフメタデータ（JSON）を事前生成</li>
+<li><strong>グリフ読み込み</strong>：JSONからUnicodeコードポイントをキーとするグリフ情報（アドバンス幅・UV座標・プレーン座標）をunordered_mapに展開</li>
+<li><strong>描画</strong>：<code>SpriteBatch</code> + カスタムPSでグリフを1文字ずつ配置・描画</li>
+</ol>
+<p>テキストアライメント（左・中央・右）、行間倍率、ドロップシャドウを設定できるようにし、<br>
+<code>FontRender</code> に差し替えるだけでゲームコードを変更せずにSDF描画へ切り替えられる設計にしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="動画再生システム">動画再生システム</h3>
+ <img src="Assets/Tutorial.gif" width="600">
+<p>ステージセレクト画面でゲームプレイ映像を再生するため、<strong>動画再生システム</strong>を自作しました。</p>
+<h4 id="クラス構成">クラス構成</h4>
+<table>
+<thead>
+<tr>
+<th>クラス</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VideoClip</code></td>
+<td>フレームデータの保持・デコード</td>
+</tr>
+<tr>
+<td><code>VideoPlayer</code></td>
+<td>再生状態の管理（再生・停止・ループ・速度）</td>
+</tr>
+<tr>
+<td><code>VideoFrameTexture</code></td>
+<td>CPU→GPUへのフレームデータ転送</td>
+</tr>
+<tr>
+<td><code>VideoRender</code></td>
+<td>スプライトとしての描画</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2種類のクリップ形式に対応">2種類のクリップ形式に対応</h4>
+<p>連番PNG（コマ撮り）とMP4の両方に対応しています。</p>
+<ul>
+<li><strong>連番PNG</strong>：全フレームをメモリに事前ロードし、インデックスで即座にアクセス</li>
+<li><strong>MP4</strong>：Windows Media Foundation APIでストリーミングデコード。<code>IMFSourceReader</code> を <code>void*</code> で保持することでヘッダーへのWindows.hインクルードを回避</li>
+</ul>
+<h4 id="videoframetexturecpugpu転送の設計">VideoFrameTexture：CPU→GPU転送の設計</h4>
+<p>毎フレーム画像データをGPUに転送するため、以下の2バッファ構成を採用しました。</p>
+<pre class="hljs"><code><div>[UPLOADヒープ] ← CPU書き込み → CopyTextureRegion → [DEFAULTヒープ（GPU読み取り）]
+</div></code></pre>
+<p>コマンドリスト記録中に <code>CopyTextureRegion</code> を発行し、前後にリソースバリア（<code>PIXEL_SHADER_RESOURCE → COPY_DEST → PIXEL_SHADER_RESOURCE</code>）を挟んで同期します。<br>
+また、<strong>前フレームと同じインデックスの場合はUploadFrameを呼ばない</strong>ことで、不要なGPU転送を省いています。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="サブカメラ小窓描画">サブカメラ（小窓描画）</h3>
+ <img src="Assets/SubCamera.gif" width="600">
+<p>シロクマに狙われた子ペンギンを別視点で映す**ピクチャー・イン・ピクチャー（小窓）**を実装しました。</p>
+<h4 id="レンダリングパイプラインへの組み込み">レンダリングパイプラインへの組み込み</h4>
+<p><code>RenderViewContext</code> という構造体を新設し、GBuffer・レンダーターゲット・フラスタム・カメラをビュー単位でまとめて管理できるようにしました。<br>
+<code>RenderingEngine</code> はメインカメラ→サブカメラの順に <code>ExecuteViewPass()</code> を呼び出し、<strong>各ビューで独立した描画パスを実行</strong>します。</p>
+<pre class="hljs"><code><div>[メインカメラ] → GBuffer → ディファードライティング → ポストエフェクト → メインRT
+[サブカメラ]  → GBuffer → ディファードライティング                        → サブRT
+                                                                           ↓
+                                                              画面上にスプライトとして合成
+</div></code></pre>
+<p>サブカメラのビューにはポストエフェクトを適用しないことで、描画コストを抑えています。</p>
+<h4 id="subcameramanagerによる制御">SubCameraManagerによる制御</h4>
+<p><code>SubCameraManager</code> は <code>CameraSystem</code> に対してサブカメラの生成・破棄を指示するとともに、小窓スプライトのスライドイン・アウトアニメーションを管理します。<br>
+ポーズ画面表示中は <code>SetRenderingBlocked(true)</code> で描画をスキップし、タイトル遷移時は <code>ForceEnd()</code> でアニメーションを省いて即時消去できるようにしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
 <h2 id="4-パフォーマンス最適化その他機能">4. パフォーマンス最適化・その他機能</h2>
 <h3 id="フラスタムカリング">フラスタムカリング</h3>
  <img src="Assets/FrustumCulling.gif" width="600">
@@ -726,6 +1158,23 @@ AABBが視錐台と交差している場合は、さらに <strong>トライア�
 また、ディザリングはGBufferパスでピクセルを <code>clip()</code> で破棄するだけなので、<strong>ディファードレンダリングとの相性が良い</strong>という利点もあります。</p>
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 <hr>
+<h3 id="危険矢印ui">危険矢印UI</h3>
+ <img src="Assets/SubCamera.gif" width="600">
+<p>シロクマに狙われている子ペンギンをプレイヤーに知らせるため、<strong>危険矢印UI</strong>を実装しました。<br>
+ターゲットがカメラのフラスタム内にいるか外にいるかで、矢印の種類と配置を自動的に切り替えます。</p>
+<h4 id="フラスタム外edge-arrow">フラスタム外：edge arrow</h4>
+<p>ターゲットが画面外にいる場合、<strong>画面中央を基点とした円の縁（半径300px）に矢印を配置</strong>し、ターゲットの方向を指し示します。<br>
+ターゲットのワールド座標をスクリーン座標に変換し、画面中心からの角度を <code>atan2</code> で求めて円縁上の座標と回転角を算出しています。</p>
+<h4 id="フラスタム内overhead-arrow">フラスタム内：overhead arrow</h4>
+<p>ターゲットが画面内にいる場合、<strong>ターゲットの真上に下向きの矢印を配置</strong>し、一目でどの子ペンギンが狙われているかわかるようにしました。</p>
+<h4 id="サブカメラとの連動">サブカメラとの連動</h4>
+<p>どちらのケースでも、最もカメラに近い攻撃対象が <code>SubCameraManager</code> を通じてサブビュー（小窓）に映し出されます。<br>
+ただしターゲットが十分近く（距離1000未満）かつフラスタム内にいる場合は、プレイヤーが目視できる状況なのでサブビューを非表示にします。</p>
+<h4 id="dangerarrowcalcによる定数の一元管理">DangerArrowCalcによる定数の一元管理</h4>
+<p>矢印の配置計算に使う定数（円半径・オフセット・回転角）と計算関数は <code>DangerArrowCalc.h</code> に分離しました。<br>
+<code>DangerArrowSystem</code> と <code>TutorialController</code> の両方がこのヘッダーを参照することで、<strong>チュートリアルの矢印と実戦の矢印が常に同じ位置・角度で表示される</strong>ことを保証しています。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
 <h2 id="5-開発プロセスボツ案">5. 開発プロセス・ボツ案</h2>
 <h3 id="未使用機能">未使用機能</h3>
 <p>実装はしていますが、今作では使用していない機能です。</p>
@@ -738,5 +1187,6 @@ AABBが視錐台と交差している場合は、さらに <strong>トライア�
 今作のアートスタイルには合わなかったため、使用していません。</p>
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 
+<script src="snow.js"></script>
 </body>
 </html>
