@@ -36,10 +36,15 @@
   - [PBRレンダリング](#pbrレンダリング)
   - [ポストエフェクト（ブルーム）](#ポストエフェクトブルーム)
   - [コンピュートシェーダー（海・渦潮）](#コンピュートシェーダー海渦潮)
+  - [地形システム](#地形システム)
+  - [SDFフォント](#sdfフォント)
+  - [動画再生システム](#動画再生システム)
+  - [サブカメラ（小窓描画）](#サブカメラ小窓描画)
 - [4. パフォーマンス最適化・その他機能](#4-パフォーマンス最適化その他機能)
   - [フラスタムカリング](#フラスタムカリング)
   - [リソースの非同期読み込み](#リソースの非同期読み込み)
   - [ディザリング](#ディザリング)
+  - [危険矢印UI](#危険矢印ui)
 - [5. 開発プロセス・ボツ案](#5-開発プロセスボツ案)
   - [未使用機能](#未使用機能)
 
@@ -83,8 +88,13 @@
     - Frustum (.cpp / .h)
     - TriangleCuller (.cpp / .h)
   - Graphics/
+    - Camera/
+      - CameraSystem (.cpp / .h)
+      - SubCameraManager (.cpp / .h)
     - Effect/
       - BeastEffectEmitter (.cpp / .h)
+    - Font/
+      - SDFFontEngine (.cpp / .h)
     - Light/
       - HemisphereLight (.cpp / .h)
       - PointLight (.cpp / .h)
@@ -95,6 +105,11 @@
       - GaussianBlur (.cpp / .h)
       - PostEffectManager (.cpp / .h)
       - PostEffectTypes (.h)
+    - Video/
+      - VideoClip (.cpp / .h)
+      - VideoFrameTexture (.cpp / .h)
+      - VideoPlayer (.cpp / .h)
+      - VideoRender (.cpp / .h)
     - BeastMeshParts (.cpp / .h)
     - BeastModel (.cpp / .h)
     - FontRender (.cpp / .h)
@@ -103,6 +118,7 @@
     - ModelRender (.cpp / .h)
     - MyRenderer (.h)
     - OcclusionDitherManager (.cpp / .h)
+    - RenderViewContext (.h)
     - RenderingEngine (.cpp / .h)
     - SpriteRender (.cpp / .h)
   - Nature/
@@ -141,9 +157,13 @@
 <summary>ゲーム（Game/Source）</summary>
 
 - Game/Source/
+  - Actor/Stage/
+    - TerrainObject (.cpp / .h)
+  - GameLog/
+    - GameLogManager (.cpp / .h)
   - Graphics/
-    - PBRStatus (.cpp / .h)
     - PBRParameter (.cpp / .h)
+    - PBRStatus (.cpp / .h)
   - Nature/
     - Ocean (.cpp / .h)
     - OceanParameter (.h)
@@ -152,8 +172,21 @@
     - WhirlpoolParameter (.h)
   - Noise/
     - NoiseManager (.cpp / .h)
-  - UI/Menu/
-    - Tutorial (.cpp / .h)
+  - Scene/
+    - EasyInGameScene (.h)
+    - HardInGameScene (.h)
+    - InGameSceneBase (.cpp / .h)
+    - NormalInGameScene (.h)
+    - TutorialController (.cpp / .h)
+    - TutorialInGameScene (.cpp / .h)
+  - UI/
+    - DangerArrow/
+      - DangerArrowCalc (.h)
+      - DangerArrowMenu (.cpp / .h)
+      - DangerArrowSystem (.cpp / .h)
+    - Menus/
+      - TutorialMenu (.cpp / .h)
+      - TutorialWindowMenu (.cpp / .h)
 
 </details>
 
@@ -179,8 +212,10 @@
   - outline.fx
   - RenderToGBuffer.fx
   - Sampler.h
+  - SDFFont.fx
   - SkyCubeMap.fx
   - sprite.fx
+  - Terrain.fx
   - toon.fx
   - Whirlpool.fx
 
@@ -468,6 +503,129 @@ CPUにReadbackした波高さキャッシュは、チャンクAABBの構築に�
 
 ---
 
+### 地形システム
+
+|  <img src="Assets/TutorialStageHeightMap.png" width="300"> | <img src="Assets/TutorialStageSplatMap.png" width="300"> | <img src="Assets/TutorialStage.png" width="600"> |
+
+ハイトマップから地形メッシュをCPU側で動的生成し、スプラットマップで複数テクスチャをブレンドする地形システムを実装しました。
+
+#### 1. ハイトマップからのメッシュ生成
+
+DirectXTexライブラリでDDS（R16_UNORM形式）のハイトマップを読み込み、各ピクセルの輝度値を `pixel / 65535.0f × heightScale` でワールド高さに変換します。  
+変換した高さ値を格納した頂点バッファをCPU上で構築し、`TkmFile` としてリソースバンクに登録することで、エンジンの既存描画パスにそのまま流し込むことができます。  
+`subsample` パラメーターで解像度を落とすことで、ポリゴン数とクオリティのバランスを場面ごとに調整できます。
+
+#### 2. スプラットマップによるテクスチャブレンド
+
+地形テクスチャの塗り分けにはスプラットマップ（R=雪・G=草・B=岩）を使用しています。  
+シェーダー（`Terrain.fx`）側でスプラットマップのRGB値をウェイトとして読み取り、3種のアルベドテクスチャを加重平均で合成します。  
+さらに各テクスチャにノーマルマップとラフネスマップを紐付けることで、既存のPBRライティングパスが地形でも正しく機能するようにしました。
+
+#### 3. チャンク単位のフラスタムカリング
+
+地形全体を一枚のメッシュとして扱うと、地形が巨大な場合に描画コストが高くなります。  
+そこで地形をチャンク単位（`chunkDivision × chunkDivision`）に分割し、それぞれに独立した `ModelRender` を割り当てました。  
+毎フレームのフラスタムカリングでチャンクAABBと視錐台の交差判定を行い、**画面に映っているチャンクのみGPUに送る**ことで、地形の描画コストを抑えています。
+
+#### 4. 物理コリジョン
+
+描画用のチャンクメッシュとは別に、フルメッシュから `PhysicalBody` のコリジョンを生成しています。  
+これにより、プレイヤーや子ペンギンが地形の起伏に正しく乗り上げることができます。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### SDFフォント
+
+デフォルトの `Font` クラスではビットマップフォントを使用しており、拡大するとピクセルが荒れる問題がありました。  
+これを解決するため、**SDF（Signed Distance Field）フォント**を実装しました。
+
+#### 仕組み
+
+SDF方式では、各グリフを「文字の輪郭からの距離」を格納したテクスチャ（SDFアトラス）として表現します。  
+カスタムピクセルシェーダー（`SDFFont.fx`）側でこの距離値をしきい値で切り分けることで、**どの解像度・スケールでも鮮明な文字**を描画できます。
+
+#### 実装の流れ
+
+<img src="Assets/sdf_atlas.png" width="300">
+
+1. **アトラス生成**：`msdf-atlas-gen` ツールで使用文字のSDFアトラス（PNG）とグリフメタデータ（JSON）を事前生成
+2. **グリフ読み込み**：JSONからUnicodeコードポイントをキーとするグリフ情報（アドバンス幅・UV座標・プレーン座標）をunordered_mapに展開
+3. **描画**：`SpriteBatch` + カスタムPSでグリフを1文字ずつ配置・描画
+
+テキストアライメント（左・中央・右）、行間倍率、ドロップシャドウを設定できるようにし、  
+`FontRender` に差し替えるだけでゲームコードを変更せずにSDF描画へ切り替えられる設計にしました。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### 動画再生システム
+
+ <img src="Assets/Tutorial.gif" width="600">
+
+ステージセレクト画面でゲームプレイ映像を再生するため、**動画再生システム**を自作しました。
+
+#### クラス構成
+
+| クラス | 役割 |
+|---|---|
+| `VideoClip` | フレームデータの保持・デコード |
+| `VideoPlayer` | 再生状態の管理（再生・停止・ループ・速度） |
+| `VideoFrameTexture` | CPU→GPUへのフレームデータ転送 |
+| `VideoRender` | スプライトとしての描画 |
+
+#### 2種類のクリップ形式に対応
+
+連番PNG（コマ撮り）とMP4の両方に対応しています。  
+- **連番PNG**：全フレームをメモリに事前ロードし、インデックスで即座にアクセス
+- **MP4**：Windows Media Foundation APIでストリーミングデコード。`IMFSourceReader` を `void*` で保持することでヘッダーへのWindows.hインクルードを回避
+
+#### VideoFrameTexture：CPU→GPU転送の設計
+
+毎フレーム画像データをGPUに転送するため、以下の2バッファ構成を採用しました。
+
+```
+[UPLOADヒープ] ← CPU書き込み → CopyTextureRegion → [DEFAULTヒープ（GPU読み取り）]
+```
+
+コマンドリスト記録中に `CopyTextureRegion` を発行し、前後にリソースバリア（`PIXEL_SHADER_RESOURCE → COPY_DEST → PIXEL_SHADER_RESOURCE`）を挟んで同期します。  
+また、**前フレームと同じインデックスの場合はUploadFrameを呼ばない**ことで、不要なGPU転送を省いています。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### サブカメラ（小窓描画）
+
+ <img src="Assets/SubCamera.gif" width="600">
+
+シロクマに狙われた子ペンギンを別視点で映す**ピクチャー・イン・ピクチャー（小窓）**を実装しました。
+
+#### レンダリングパイプラインへの組み込み
+
+`RenderViewContext` という構造体を新設し、GBuffer・レンダーターゲット・フラスタム・カメラをビュー単位でまとめて管理できるようにしました。  
+`RenderingEngine` はメインカメラ→サブカメラの順に `ExecuteViewPass()` を呼び出し、**各ビューで独立した描画パスを実行**します。
+
+```
+[メインカメラ] → GBuffer → ディファードライティング → ポストエフェクト → メインRT
+[サブカメラ]  → GBuffer → ディファードライティング                        → サブRT
+                                                                           ↓
+                                                              画面上にスプライトとして合成
+```
+
+サブカメラのビューにはポストエフェクトを適用しないことで、描画コストを抑えています。
+
+#### SubCameraManagerによる制御
+
+`SubCameraManager` は `CameraSystem` に対してサブカメラの生成・破棄を指示するとともに、小窓スプライトのスライドイン・アウトアニメーションを管理します。  
+ポーズ画面表示中は `SetRenderingBlocked(true)` で描画をスキップし、タイトル遷移時は `ForceEnd()` でアニメーションを省いて即時消去できるようにしました。
+
+[⇑目次に戻る](#目次)
+
+---
+
 ## 4. パフォーマンス最適化・その他機能
 
 ### フラスタムカリング
@@ -573,6 +731,36 @@ BeastEngine に **`ResourceManager`** を実装し、
 
 これにより、プレイヤーと重なっている部分だけをピンポイントで透過でき、不要な半透明化が発生しなくなりました。  
 また、ディザリングはGBufferパスでピクセルを `clip()` で破棄するだけなので、**ディファードレンダリングとの相性が良い**という利点もあります。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### 危険矢印UI
+
+ <img src="Assets/SubCamera.gif" width="600">
+
+シロクマに狙われている子ペンギンをプレイヤーに知らせるため、**危険矢印UI**を実装しました。  
+ターゲットがカメラのフラスタム内にいるか外にいるかで、矢印の種類と配置を自動的に切り替えます。
+
+#### フラスタム外：edge arrow
+
+ターゲットが画面外にいる場合、**画面中央を基点とした円の縁（半径300px）に矢印を配置**し、ターゲットの方向を指し示します。  
+ターゲットのワールド座標をスクリーン座標に変換し、画面中心からの角度を `atan2` で求めて円縁上の座標と回転角を算出しています。
+
+#### フラスタム内：overhead arrow
+
+ターゲットが画面内にいる場合、**ターゲットの真上に下向きの矢印を配置**し、一目でどの子ペンギンが狙われているかわかるようにしました。
+
+#### サブカメラとの連動
+
+どちらのケースでも、最もカメラに近い攻撃対象が `SubCameraManager` を通じてサブビュー（小窓）に映し出されます。  
+ただしターゲットが十分近く（距離1000未満）かつフラスタム内にいる場合は、プレイヤーが目視できる状況なのでサブビューを非表示にします。
+
+#### DangerArrowCalcによる定数の一元管理
+
+矢印の配置計算に使う定数（円半径・オフセット・回転角）と計算関数は `DangerArrowCalc.h` に分離しました。  
+`DangerArrowSystem` と `TutorialController` の両方がこのヘッダーを参照することで、**チュートリアルの矢印と実戦の矢印が常に同じ位置・角度で表示される**ことを保証しています。
 
 [⇑目次に戻る](#目次)
 
