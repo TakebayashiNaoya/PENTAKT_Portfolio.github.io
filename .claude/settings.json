@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"c:\\\\Git\\\\PENTAKT_Portfolio.github.io\\\\.vscode\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Git\\PENTAKT_Portfolio.github.io"
+    ]
+  }
+}

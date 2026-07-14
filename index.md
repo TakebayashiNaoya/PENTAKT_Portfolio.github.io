@@ -1,4 +1,3 @@
- 
  <img src="Assets/PENTAKT.png" width="600">
 
 ---
@@ -15,7 +14,7 @@
 **特技** : 溶接  
 **休日の過ごし方** : 積みゲーの消化、ネッ友とゲーム  
 **好きなゲームジャンル** : MMO、FPS、RPG、謎解き、サンドボックス、レース  
-**最近遊んだゲーム** : ぽこあポケモン、ドラゴンクエストVII Reimagined、サブノーティカ2、REPO  
+**最近遊んだゲーム** : サブノーティカ2、リズム天国、スターフォックス
 
 **長所** :   
 - **行動力** : 何をするにしても動き出しが速く、躊躇いがありません。試行回数が増える分、リカバリーも速いです。
@@ -40,12 +39,18 @@
   - [SDFフォント](#sdfフォント)
   - [動画再生システム](#動画再生システム)
   - [サブカメラ（小窓描画）](#サブカメラ小窓描画)
-- [4. パフォーマンス最適化・その他機能](#4-パフォーマンス最適化その他機能)
+- [4. ゲームプレイシステム実装](#4-ゲームプレイシステム実装)
+  - [陣形システム](#陣形システム)
+  - [ウルトシステム](#ウルトシステム)
+  - [陣形UI](#陣形ui)
+  - [レベルアップ演出](#レベルアップ演出)
+  - [フィーバータイム](#フィーバータイム)
+- [5. パフォーマンス最適化・その他機能](#5-パフォーマンス最適化その他機能)
   - [フラスタムカリング](#フラスタムカリング)
   - [リソースの非同期読み込み](#リソースの非同期読み込み)
   - [ディザリング](#ディザリング)
   - [危険矢印UI](#危険矢印ui)
-- [5. 開発プロセス・ボツ案](#5-開発プロセスボツ案)
+- [6. 開発プロセス・ボツ案](#6-開発プロセスボツ案)
   - [未使用機能](#未使用機能)
 
 ---
@@ -114,6 +119,7 @@
     - BeastModel (.cpp / .h)
     - FontRender (.cpp / .h)
     - GraphicsEnums (.h)
+    - ICustomRenderer (.h)
     - IRenderer (.h)
     - ModelRender (.cpp / .h)
     - MyRenderer (.h)
@@ -157,6 +163,20 @@
 <summary>ゲーム（Game/Source）</summary>
 
 - Game/Source/
+  - Actor/Character/Penguin/Formation/
+    - Effect/
+      - FormationEffectChain (.h)
+      - FormationEffects (.cpp / .h)
+      - IFormationEffect (.h)
+    - Ult/
+      - UltContext (.h)
+      - UltController (.cpp / .h)
+    - FormationController (.cpp / .h)
+    - FormationDebugMonitor (.cpp / .h)
+    - FormationRangeVisualizer (.cpp / .h)
+    - Formations (.cpp / .h)
+    - MasterFormationParameter (.h)
+    - TerrainCircle (.cpp / .h)
   - Actor/Stage/
     - TerrainObject (.cpp / .h)
   - GameLog/
@@ -164,6 +184,8 @@
   - Graphics/
     - PBRParameter (.cpp / .h)
     - PBRStatus (.cpp / .h)
+  - Manager/
+    - FeverTimeManager (.cpp / .h)
   - Nature/
     - Ocean (.cpp / .h)
     - OceanParameter (.h)
@@ -184,9 +206,16 @@
       - DangerArrowCalc (.h)
       - DangerArrowMenu (.cpp / .h)
       - DangerArrowSystem (.cpp / .h)
+    - Fever/
+      - FeverIconMenu (.cpp / .h)
+    - FormationWheel/
+      - FormationWheelMenu (.cpp / .h)
     - Menus/
+      - LevelUpIconMenu (.cpp / .h)
       - TutorialMenu (.cpp / .h)
       - TutorialWindowMenu (.cpp / .h)
+    - Model/
+      - LevelUpIconAnimStatus (.cpp / .h)
 
 </details>
 
@@ -203,7 +232,9 @@
   - DeferredLighting_cav_register.h
   - DeferredLighting_srv_uav_register.h
   - DrawVolumeLight.fx
+  - FormationRange.fx
   - IBL.h
+  - LinearFillGauge.fx
   - model.fx
   - model_srv_uav_register.h
   - ModelVSCommon.h
@@ -225,6 +256,11 @@
 <summary>パラメーター（Game/Assets/parameter）</summary>
 
 - Game/Assets/parameter/
+  - character/penguin/formation/
+    - FormationParameter.json
+    - FormationSwitchTuning.json
+  - fever/
+    - feverParameter.json
   - Graphics/
     - PBRParameter.json
   - nature/
@@ -232,6 +268,13 @@
     - whirlpoolParameter.json
   - Tutorial/
     - Tutorial.json
+  - UI/fever/
+    - FeverIcon.json
+  - UI/formationWheel/
+    - FormationWheel.json
+    - FormationWheelTuning.json
+  - UI/levelUp/
+    - LevelUpIcon.json
 
 </details>
 
@@ -357,9 +400,9 @@ GBufferは1ピクセルにつき1つの情報しか持てないため、複数�
 
 ### PBRレンダリング
 
-| PBRあり | PBRなし |
+| PBRなし | PBRあり |
 | ------- | ------- |
-| <img src="Assets/PBR_ON.gif" width="600"> | <img src="Assets/PBR_OFF.gif" width="600"> |
+| <img src="Assets/PBR_OFF.gif" width="600"> | <img src="Assets/PBR_ON.gif" width="600"> |
 
 見た目のクオリティを上げるため、**PBR（物理ベースレンダリング）** を実装しました。
 
@@ -404,9 +447,9 @@ jsonを用いることで、プログラマー以外の方でも簡単に調整�
 
 ### ポストエフェクト（ブルーム）
 
-| ブルームあり | ブルームなし |
+| ブルームなし | ブルームあり |
 | ------- | ------- |
-| <img src="Assets/Ocean_Bloom_ON.gif" width="600"> | <img src="Assets/Ocean_Bloom_OFF.gif" width="600"> |
+| <img src="Assets/Ocean_Bloom_OFF.gif" width="600"> | <img src="Assets/Ocean_Bloom_ON.gif" width="600"> |
 
 見た目のクオリティをさらに上げるため、**ブルーム**を実装しました。  
 これにより、海の鏡面反射がキラキラと輝いて見えるようになりました。  
@@ -505,7 +548,7 @@ CPUにReadbackした波高さキャッシュは、チャンクAABBの構築に�
 
 ### 地形システム
 
-|  <img src="Assets/TutorialStageHeightMap.png" width="300"> | <img src="Assets/TutorialStageSplatMap.png" width="300"> | <img src="Assets/TutorialStage.png" width="600"> |
+<img src="Assets/TutorialStageHeightMap.png" width="300"><img src="Assets/TutorialStageSplatMap.png" width="300"><img src="Assets/TutorialStage.png" width="600">
 
 ハイトマップから地形メッシュをCPU側で動的生成し、スプラットマップで複数テクスチャをブレンドする地形システムを実装しました。
 
@@ -626,7 +669,135 @@ SDF方式では、各グリフを「文字の輪郭からの距離」を格納�
 
 ---
 
-## 4. パフォーマンス最適化・その他機能
+## 4. ゲームプレイシステム実装
+
+### 陣形システム
+
+ <img src="Assets/Formation.gif" width="600">
+
+親ペンギンに追従する子ペンギンたちの隊列を「陣形」として実装しました。
+**円陣・密集陣・散開陣・三角陣**の4種類があり、プレイヤーは状況に応じて陣形を切り替えることで、移動速度や渦潮への耐性、隊列の広さなどが変化します。
+
+#### IFormationによる陣形の抽象化
+
+各陣形は `IFormation` を継承し、`CalculatePositions()` で子ペンギンの配置座標を計算します。
+
+- **リング陣形（円陣・密集陣・散開陣）**：共通基底クラス `RingFormation` が、リング k（1始まり）に `baseFollowers*k` 体を等間隔配置するロジックを持ちます。各リングの半径は `radiusPerRing*k` となり、全リングで隣接間隔が均一になるよう設計しています。3陣形はこの基底クラスを継承し、`baseFollowers` / `radiusPerRing` などのパラメーターだけをJSONで変えることで隊列の密度を作り分けています。
+- **三角陣**：ボーリングのピン配置のようにレベル1で9体を4行に並べ、レベルが上がるごとに外周を1層ずつ拡張していくアルゴリズムを実装しました。
+
+```c++
+// RingFormation::CalculatePositions（抜粋）
+// リング ring（1始まり）: baseFollowers*ring 体を半径 radiusPerRing*ring に等間隔配置
+for (int ring = 1; placed < count; ++ring)
+{
+    const int   ringCount = m_param->baseFollowers * ring;
+    const float radius    = m_param->radiusPerRing * ring;
+    for (int i = 0; i < ringCount && placed < count; ++i)
+    {
+        const float angle = startAngle + (float)i / ringCount * 2.0f * Math::PI;
+        Vector3 pos = center;
+        pos.x += radius * sinf(angle);
+        pos.z += radius * cosf(angle);
+        out.push_back(pos);
+        ++placed;
+    }
+}
+```
+
+#### FormationControllerによるレベル管理・入隊判定・範囲の可視化
+
+`FormationController` は4種類の `IFormation` インスタンスを配列で保持し、現在の陣形への切り替え・座標計算の委譲・陣形レベル管理（満員になったリング数）をまとめて行います。  
+入隊判定半径は「最外半径 + 入隊マージン」で求まり、**ウルト発動中は陣形固有の拡大距離との大きい方を採用**することで、ウルト中だけ一時的に入隊しやすくなる演出も実現しています。
+
+この入隊範囲を可視化するため、地形の起伏に貼り付く円 `TerrainCircle` と、それを束ねる `FormationRangeVisualizer` を実装しました。`TerrainCircle` は中心座標から `PhysicsWorld::Raycast` → `Ocean::SampleWaveHeight` の順に地表高さをサンプリングして円周上の各頂点のYを決定し、陸地でも海面でも地形に沿ったリングを描画します。  
+これらは既存の `RenderingEngine` にゲーム側専用の描画クラスを差し込むための新インターフェース `ICustomRenderer` を経由して呼び出しており、エンジン側のフォワードレンダリングパスに独自メッシュ・独自シェーダー（`FormationRange.fx`）で割り込めるようにしました。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### ウルトシステム
+
+#### コンポジット・ストラテジーパターンによる陣形効果の設計
+
+陣形ごとに固有のウルト効果（速度アップ・渦潮耐性・シロクマ攻撃無効化・ペンギン呼び出しなど）を組み合わせる際、if文の羅列にならないよう、`IFormationEffect` を起点にしたコンポジット・ストラテジー構成で設計しました。
+
+- `IFormationEffect`：`GetSpeedMultiplier()` / `HasWhirlpoolResistance()` / `Enter` / `Update` / `Exit` を持つ、効果1つ分のインターフェース
+- `FormationEffectChain`：複数の `IFormationEffect` を保持し、速度倍率は全エフェクトの**乗算**、渦潮耐性は全エフェクトの**OR**で合成する
+- 各 `IFormation` は「常時有効な `m_passive`」と「ウルト中のみ有効な `m_ult`」の2本のチェーンを持ち、コンストラクタで `SpeedModifierEffect` / `WhirlpoolResistanceEffect` / `PenguinCallEffect` / `BearAttackNullifyEffect` などの具体エフェクトを陣形ごとに組み合わせて登録する
+
+```c++
+// ClusterFormation（密集陣）のウルト効果の組み立て例
+m_ult.AddEffect(std::make_unique<WhirlpoolSpeedBoostEffect>(&param.ultWhirlpoolBoostMultiplier));
+if (param.ultBearAttackNullify)
+{
+    m_ult.AddEffect(std::make_unique<BearAttackNullifyEffect>());
+}
+m_ultVisual = std::make_unique<UltEffectCluster>();  // ウルト演出（ビジュアル）は効果と分離して所有
+```
+
+この設計により、新しい陣形やウルト効果を追加する際も既存クラスを一切変更せず、`FormationEffects.h` に効果クラスを1つ追加して陣形のコンストラクタで組み合わせるだけで済むようになっています。
+
+#### UltControllerによる発動・タイマー管理
+
+`UltController` はこのエフェクトチェーンと演出（`IUltEffect`、非所有ポインタ）を受け取り、発動・毎フレーム更新・クールダウン管理を担当します。効果と演出の所有権はどちらも `IFormation` 側が持ち、`UltController` は陣形切り替え時に `SetUlt()` で参照を差し替えるだけにすることで、陣形をまたいだウルトの状態遷移でも安全に破棄・切り替えができるようにしています。  
+また、チャージ中（クールダウン中）とディスチャージ中（発動中）のループSEの再生・停止も `UltController` 側で状態同期しており、シーン破棄時だけでなく、それを経由しない破棄経路でも鳴りっぱなしにならないようデストラクタで明示的に停止する保険を入れています。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### 陣形UI
+
+| ウルトチャージ中 | ウルト発動可能 | ウルト発動中 |
+| ------- | ------- | ------- |
+|<img src="Assets/Ult_Charge.gif" width="600">| <img src="Assets/Ult_CanActive.gif" width="600"> | <img src="Assets/Ult_Active.gif" width="600"> |
+
+#### FormationWheelMenu：陣形切り替え・ウルトゲージの表示
+
+画面下部に現在の陣形アイコンを中央に大きく表示し、その左右にLB/RBで切り替わる陣形アイコンを並べるUIを実装しました。切り替え中は各アイコンが横方向にスライドするアニメーションを行い（`FormationController::IsSwitchingFormation()` と連動して連続入力をロック）、LT/RTのウルトアイコンはウルト発動可能な間だけ通常色、それ以外はグレーアウトします。座標・サイズ・色などの見た目パラメーターは `FormationWheelTuning.json` からホットリロードで調整できるようにし、デザイン確認のたびにビルドし直す手間を無くしました。
+
+#### LinearFillGauge：アイコンの形を保ったまま塗りつぶすゲージシェーダー
+
+ウルトのクールダウンゲージには、アイコンの絵柄を保ったまま下から上へ色が塗り上がっていく表現が欲しかったため、専用シェーダー `LinearFillGauge.fx` を新規実装しました。
+
+```hlsl
+// UV.y は 0(画像の上端) 〜 1(画像の下端)。下端から g_fillAmount の割合だけ塗りつぶす
+float fillLine = 1.0f - g_fillAmount;
+float fillMask = smoothstep(fillLine - AA, fillLine + AA, In.uv.y);
+float4 tint = lerp(g_baseColor, g_fillColor, fillMask);
+float4 color = float4(tint.rgb, tint.a * texAlpha);
+```
+
+テクスチャのアルファ値（アイコンの形）はそのまま活かしつつ、UV.y方向のしきい値を `smoothstep` で滑らかにブレンドすることで、スケールを変えずにアンチエイリアスのかかった塗り分けを実現しています。BeastEngine側には対応する `LinearFillGaugeRender`（`IRenderer` 派生）を追加し、ゲーム側からは `UIParts.h` の `UILinearFillGauge` を通して他のUI部品と同じ感覚で `SetFillAmount()` を呼ぶだけで使えるようにしました。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### レベルアップ演出
+
+ <img src="Assets/LevelUp.gif" width="600">
+
+陣形のリングが満員になり陣形レベルが上がった瞬間、親ペンギンの頭上にアイコンを表示する `LevelUpIconMenu` を実装しました。ワールド座標をスクリーン座標に変換して追従させつつ、上昇移動とフェードイン→待機→フェードアウトを行います。色のフェード自体は既存の `UIColorAnimation` に任せ、`LevelUpIconMenu` 側はフェードイン用アニメーションからフェードアウト用アニメーションへ差し替えるタイミング管理と移動更新だけに責務を絞ることで、既存のUIアニメーション基盤を再利用しつつ演出固有のロジックを薄く保っています。
+
+[⇑目次に戻る](#目次)
+
+---
+
+### フィーバータイム
+
+ <img src="Assets/Fever.gif" width="600">
+
+ステージ上の子ペンギンを全員捕獲した瞬間、または残り時間が一定を下回った瞬間のどちらか早い方で発生する「フィーバータイム」を実装しました。`FeverTimeManager` が発生条件の判定と、上空からの子ペンギン投下キューの管理（1回のフィーバーで投下する総数の上限、捕獲するたびにキューへ積み増す挙動など）をまとめて担当します。
+
+フィーバー開始時には画面に「FEVER」の文字をF→E→V→E→Rの順に波打つようにジャンプさせながら登場させ、一定時間後に同じ順番でジャンプ退場させる演出を `FeverIconMenu` で実装しました。文字ごとに移動用のベジェ曲線とアルファ用のカーブを個別に持たせ、開始タイミングをずらして再生することで、文字が連鎖的にジャンプしているように見えるようにしています。
+
+[⇑目次に戻る](#目次)
+
+---
+
+## 5. パフォーマンス最適化・その他機能
 
 ### フラスタムカリング
 
@@ -636,9 +807,9 @@ SDF方式では、各グリフを「文字の輪郭からの距離」を格納�
 画面外のオブジェクトを描画しないようにするため、**フラスタムカリング**を実装しました。  
 ビュープロジェクション行列から6平面を抽出し、AABBやポリゴンとの交差判定を行います。
 
-|フラスタムカリングON|フラスタムカリングOFF|
+|フラスタムカリングOFF|フラスタムカリングON|
 |---|---|
-|<img src="Assets/FPS_Fast.gif" width="600">|<img src="Assets/FPS_Slow.gif" width="600">|
+|<img src="Assets/FPS_Slow.gif" width="600">|<img src="Assets/FPS_Fast.gif" width="600">|
 
 スポーン直後でFPSを計測しました。  
 フラスタムカリングをONにすると、安定して144fpsが出ていますが、OFFにすると140fpsを下回ることが多々あります。
@@ -766,7 +937,7 @@ BeastEngine に **`ResourceManager`** を実装し、
 
 ---
 
-## 5. 開発プロセス・ボツ案
+## 6. 開発プロセス・ボツ案
 
 ### 未使用機能
 

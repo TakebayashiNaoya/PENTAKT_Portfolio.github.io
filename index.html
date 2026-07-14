@@ -353,9 +353,8 @@ code {
 }
 
 </style>
-
+<link rel="stylesheet" href="file://c:\Git\PENTAKT_Portfolio.github.io\style.css" type="text/css">
 <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
-<link rel="stylesheet" href="style.css">
 </head>
 <body>
   <script>
@@ -377,7 +376,7 @@ code {
 <strong>特技</strong> : 溶接<br>
 <strong>休日の過ごし方</strong> : 積みゲーの消化、ネッ友とゲーム<br>
 <strong>好きなゲームジャンル</strong> : MMO、FPS、RPG、謎解き、サンドボックス、レース<br>
-<strong>最近遊んだゲーム</strong> : ぽこあポケモン、ドラゴンクエストVII Reimagined、サブノーティカ2、REPO</p>
+<strong>最近遊んだゲーム</strong> : サブノーティカ2、リズム天国、スターフォックス</p>
 <p><strong>長所</strong> :</p>
 <ul>
 <li><strong>行動力</strong> : 何をするにしても動き出しが速く、躊躇いがありません。試行回数が増える分、リカバリーも速いです。</li>
@@ -411,7 +410,16 @@ code {
 <li><a href="#%E3%82%B5%E3%83%96%E3%82%AB%E3%83%A1%E3%83%A9%E5%B0%8F%E7%AA%93%E6%8F%8F%E7%94%BB">サブカメラ（小窓描画）</a></li>
 </ul>
 </li>
-<li><a href="#4-%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E6%9C%80%E9%81%A9%E5%8C%96%E3%81%9D%E3%81%AE%E4%BB%96%E6%A9%9F%E8%83%BD">4. パフォーマンス最適化・その他機能</a>
+<li><a href="#4-%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AC%E3%82%A4%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E5%AE%9F%E8%A3%85">4. ゲームプレイシステム実装</a>
+<ul>
+<li><a href="#%E9%99%A3%E5%BD%A2%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">陣形システム</a></li>
+<li><a href="#%E3%82%A6%E3%83%AB%E3%83%88%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">ウルトシステム</a></li>
+<li><a href="#%E9%99%A3%E5%BD%A2ui">陣形UI</a></li>
+<li><a href="#%E3%83%AC%E3%83%99%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E6%BC%94%E5%87%BA">レベルアップ演出</a></li>
+<li><a href="#%E3%83%95%E3%82%A3%E3%83%BC%E3%83%90%E3%83%BC%E3%82%BF%E3%82%A4%E3%83%A0">フィーバータイム</a></li>
+</ul>
+</li>
+<li><a href="#5-%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E6%9C%80%E9%81%A9%E5%8C%96%E3%81%9D%E3%81%AE%E4%BB%96%E6%A9%9F%E8%83%BD">5. パフォーマンス最適化・その他機能</a>
 <ul>
 <li><a href="#%E3%83%95%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%AB%E3%83%AA%E3%83%B3%E3%82%B0">フラスタムカリング</a></li>
 <li><a href="#%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AE%E9%9D%9E%E5%90%8C%E6%9C%9F%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF">リソースの非同期読み込み</a></li>
@@ -419,7 +427,7 @@ code {
 <li><a href="#%E5%8D%B1%E9%99%BA%E7%9F%A2%E5%8D%B0ui">危険矢印UI</a></li>
 </ul>
 </li>
-<li><a href="#5-%E9%96%8B%E7%99%BA%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%83%9C%E3%83%84%E6%A1%88">5. 開発プロセス・ボツ案</a>
+<li><a href="#6-%E9%96%8B%E7%99%BA%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%83%9C%E3%83%84%E6%A1%88">6. 開発プロセス・ボツ案</a>
 <ul>
 <li><a href="#%E6%9C%AA%E4%BD%BF%E7%94%A8%E6%A9%9F%E8%83%BD">未使用機能</a></li>
 </ul>
@@ -546,6 +554,7 @@ code {
 <li>BeastModel (.cpp / .h)</li>
 <li>FontRender (.cpp / .h)</li>
 <li>GraphicsEnums (.h)</li>
+<li>ICustomRenderer (.h)</li>
 <li>IRenderer (.h)</li>
 <li>ModelRender (.cpp / .h)</li>
 <li>MyRenderer (.h)</li>
@@ -602,6 +611,29 @@ code {
 <ul>
 <li>Game/Source/
 <ul>
+<li>Actor/Character/Penguin/Formation/
+<ul>
+<li>Effect/
+<ul>
+<li>FormationEffectChain (.h)</li>
+<li>FormationEffects (.cpp / .h)</li>
+<li>IFormationEffect (.h)</li>
+</ul>
+</li>
+<li>Ult/
+<ul>
+<li>UltContext (.h)</li>
+<li>UltController (.cpp / .h)</li>
+</ul>
+</li>
+<li>FormationController (.cpp / .h)</li>
+<li>FormationDebugMonitor (.cpp / .h)</li>
+<li>FormationRangeVisualizer (.cpp / .h)</li>
+<li>Formations (.cpp / .h)</li>
+<li>MasterFormationParameter (.h)</li>
+<li>TerrainCircle (.cpp / .h)</li>
+</ul>
+</li>
 <li>Actor/Stage/
 <ul>
 <li>TerrainObject (.cpp / .h)</li>
@@ -616,6 +648,11 @@ code {
 <ul>
 <li>PBRParameter (.cpp / .h)</li>
 <li>PBRStatus (.cpp / .h)</li>
+</ul>
+</li>
+<li>Manager/
+<ul>
+<li>FeverTimeManager (.cpp / .h)</li>
 </ul>
 </li>
 <li>Nature/
@@ -651,10 +688,26 @@ code {
 <li>DangerArrowSystem (.cpp / .h)</li>
 </ul>
 </li>
+<li>Fever/
+<ul>
+<li>FeverIconMenu (.cpp / .h)</li>
+</ul>
+</li>
+<li>FormationWheel/
+<ul>
+<li>FormationWheelMenu (.cpp / .h)</li>
+</ul>
+</li>
 <li>Menus/
 <ul>
+<li>LevelUpIconMenu (.cpp / .h)</li>
 <li>TutorialMenu (.cpp / .h)</li>
 <li>TutorialWindowMenu (.cpp / .h)</li>
+</ul>
+</li>
+<li>Model/
+<ul>
+<li>LevelUpIconAnimStatus (.cpp / .h)</li>
 </ul>
 </li>
 </ul>
@@ -680,7 +733,9 @@ code {
 <li>DeferredLighting_cav_register.h</li>
 <li>DeferredLighting_srv_uav_register.h</li>
 <li>DrawVolumeLight.fx</li>
+<li>FormationRange.fx</li>
 <li>IBL.h</li>
+<li>LinearFillGauge.fx</li>
 <li>model.fx</li>
 <li>model_srv_uav_register.h</li>
 <li>ModelVSCommon.h</li>
@@ -704,6 +759,17 @@ code {
 <ul>
 <li>Game/Assets/parameter/
 <ul>
+<li>character/penguin/formation/
+<ul>
+<li>FormationParameter.json</li>
+<li>FormationSwitchTuning.json</li>
+</ul>
+</li>
+<li>fever/
+<ul>
+<li>feverParameter.json</li>
+</ul>
+</li>
 <li>Graphics/
 <ul>
 <li>PBRParameter.json</li>
@@ -718,6 +784,22 @@ code {
 <li>Tutorial/
 <ul>
 <li>Tutorial.json</li>
+</ul>
+</li>
+<li>UI/fever/
+<ul>
+<li>FeverIcon.json</li>
+</ul>
+</li>
+<li>UI/formationWheel/
+<ul>
+<li>FormationWheel.json</li>
+<li>FormationWheelTuning.json</li>
+</ul>
+</li>
+<li>UI/levelUp/
+<ul>
+<li>LevelUpIcon.json</li>
 </ul>
 </li>
 </ul>
@@ -826,14 +908,14 @@ GBufferは1ピクセルにつき1つの情報しか持てないため、複数�
 <table>
 <thead>
 <tr>
-<th>PBRあり</th>
 <th>PBRなし</th>
+<th>PBRあり</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><img src="Assets/PBR_ON.gif" width="600"></td>
 <td><img src="Assets/PBR_OFF.gif" width="600"></td>
+<td><img src="Assets/PBR_ON.gif" width="600"></td>
 </tr>
 </tbody>
 </table>
@@ -875,14 +957,14 @@ jsonを用いることで、プログラマー以外の方でも簡単に調整�
 <table>
 <thead>
 <tr>
-<th>ブルームあり</th>
 <th>ブルームなし</th>
+<th>ブルームあり</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><img src="Assets/Ocean_Bloom_ON.gif" width="600"></td>
 <td><img src="Assets/Ocean_Bloom_OFF.gif" width="600"></td>
+<td><img src="Assets/Ocean_Bloom_ON.gif" width="600"></td>
 </tr>
 </tbody>
 </table>
@@ -973,7 +1055,7 @@ CPUにReadbackした波高さキャッシュは、チャンクAABBの構築に�
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 <hr>
 <h3 id="地形システム">地形システム</h3>
-<p>|  <img src="Assets/TutorialStageHeightMap.png" width="300"> | <img src="Assets/TutorialStageSplatMap.png" width="300"> | <img src="Assets/TutorialStage.png" width="600"> |</p>
+<p><img src="Assets/TutorialStageHeightMap.png" width="300"><img src="Assets/TutorialStageSplatMap.png" width="300"><img src="Assets/TutorialStage.png" width="600"></p>
 <p>ハイトマップから地形メッシュをCPU側で動的生成し、スプラットマップで複数テクスチャをブレンドする地形システムを実装しました。</p>
 <h4 id="1-ハイトマップからのメッシュ生成">1. ハイトマップからのメッシュ生成</h4>
 <p>DirectXTexライブラリでDDS（R16_UNORM形式）のハイトマップを読み込み、各ピクセルの輝度値を <code>pixel / 65535.0f × heightScale</code> でワールド高さに変換します。<br>
@@ -1070,7 +1152,105 @@ CPUにReadbackした波高さキャッシュは、チャンクAABBの構築に�
 ポーズ画面表示中は <code>SetRenderingBlocked(true)</code> で描画をスキップし、タイトル遷移時は <code>ForceEnd()</code> でアニメーションを省いて即時消去できるようにしました。</p>
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 <hr>
-<h2 id="4-パフォーマンス最適化その他機能">4. パフォーマンス最適化・その他機能</h2>
+<h2 id="4-ゲームプレイシステム実装">4. ゲームプレイシステム実装</h2>
+<h3 id="陣形システム">陣形システム</h3>
+ <img src="Assets/Formation.gif" width="600">
+<p>親ペンギンに追従する子ペンギンたちの隊列を「陣形」として実装しました。
+<strong>円陣・密集陣・散開陣・三角陣</strong>の4種類があり、プレイヤーは状況に応じて陣形を切り替えることで、移動速度や渦潮への耐性、隊列の広さなどが変化します。</p>
+<h4 id="iformationによる陣形の抽象化">IFormationによる陣形の抽象化</h4>
+<p>各陣形は <code>IFormation</code> を継承し、<code>CalculatePositions()</code> で子ペンギンの配置座標を計算します。</p>
+<ul>
+<li><strong>リング陣形（円陣・密集陣・散開陣）</strong>：共通基底クラス <code>RingFormation</code> が、リング k（1始まり）に <code>baseFollowers*k</code> 体を等間隔配置するロジックを持ちます。各リングの半径は <code>radiusPerRing*k</code> となり、全リングで隣接間隔が均一になるよう設計しています。3陣形はこの基底クラスを継承し、<code>baseFollowers</code> / <code>radiusPerRing</code> などのパラメーターだけをJSONで変えることで隊列の密度を作り分けています。</li>
+<li><strong>三角陣</strong>：ボーリングのピン配置のようにレベル1で9体を4行に並べ、レベルが上がるごとに外周を1層ずつ拡張していくアルゴリズムを実装しました。</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// RingFormation::CalculatePositions（抜粋）</span>
+<span class="hljs-comment">// リング ring（1始まり）: baseFollowers*ring 体を半径 radiusPerRing*ring に等間隔配置</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> ring = <span class="hljs-number">1</span>; placed &lt; count; ++ring)
+{
+    <span class="hljs-type">const</span> <span class="hljs-type">int</span>   ringCount = m_param-&gt;baseFollowers * ring;
+    <span class="hljs-type">const</span> <span class="hljs-type">float</span> radius    = m_param-&gt;radiusPerRing * ring;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; ringCount &amp;&amp; placed &lt; count; ++i)
+    {
+        <span class="hljs-type">const</span> <span class="hljs-type">float</span> angle = startAngle + (<span class="hljs-type">float</span>)i / ringCount * <span class="hljs-number">2.0f</span> * Math::PI;
+        Vector3 pos = center;
+        pos.x += radius * <span class="hljs-built_in">sinf</span>(angle);
+        pos.z += radius * <span class="hljs-built_in">cosf</span>(angle);
+        out.<span class="hljs-built_in">push_back</span>(pos);
+        ++placed;
+    }
+}
+</div></code></pre>
+<h4 id="formationcontrollerによるレベル管理入隊判定範囲の可視化">FormationControllerによるレベル管理・入隊判定・範囲の可視化</h4>
+<p><code>FormationController</code> は4種類の <code>IFormation</code> インスタンスを配列で保持し、現在の陣形への切り替え・座標計算の委譲・陣形レベル管理（満員になったリング数）をまとめて行います。<br>
+入隊判定半径は「最外半径 + 入隊マージン」で求まり、<strong>ウルト発動中は陣形固有の拡大距離との大きい方を採用</strong>することで、ウルト中だけ一時的に入隊しやすくなる演出も実現しています。</p>
+<p>この入隊範囲を可視化するため、地形の起伏に貼り付く円 <code>TerrainCircle</code> と、それを束ねる <code>FormationRangeVisualizer</code> を実装しました。<code>TerrainCircle</code> は中心座標から <code>PhysicsWorld::Raycast</code> → <code>Ocean::SampleWaveHeight</code> の順に地表高さをサンプリングして円周上の各頂点のYを決定し、陸地でも海面でも地形に沿ったリングを描画します。<br>
+これらは既存の <code>RenderingEngine</code> にゲーム側専用の描画クラスを差し込むための新インターフェース <code>ICustomRenderer</code> を経由して呼び出しており、エンジン側のフォワードレンダリングパスに独自メッシュ・独自シェーダー（<code>FormationRange.fx</code>）で割り込めるようにしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="ウルトシステム">ウルトシステム</h3>
+<h4 id="コンポジットストラテジーパターンによる陣形効果の設計">コンポジット・ストラテジーパターンによる陣形効果の設計</h4>
+<p>陣形ごとに固有のウルト効果（速度アップ・渦潮耐性・シロクマ攻撃無効化・ペンギン呼び出しなど）を組み合わせる際、if文の羅列にならないよう、<code>IFormationEffect</code> を起点にしたコンポジット・ストラテジー構成で設計しました。</p>
+<ul>
+<li><code>IFormationEffect</code>：<code>GetSpeedMultiplier()</code> / <code>HasWhirlpoolResistance()</code> / <code>Enter</code> / <code>Update</code> / <code>Exit</code> を持つ、効果1つ分のインターフェース</li>
+<li><code>FormationEffectChain</code>：複数の <code>IFormationEffect</code> を保持し、速度倍率は全エフェクトの<strong>乗算</strong>、渦潮耐性は全エフェクトの<strong>OR</strong>で合成する</li>
+<li>各 <code>IFormation</code> は「常時有効な <code>m_passive</code>」と「ウルト中のみ有効な <code>m_ult</code>」の2本のチェーンを持ち、コンストラクタで <code>SpeedModifierEffect</code> / <code>WhirlpoolResistanceEffect</code> / <code>PenguinCallEffect</code> / <code>BearAttackNullifyEffect</code> などの具体エフェクトを陣形ごとに組み合わせて登録する</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// ClusterFormation（密集陣）のウルト効果の組み立て例</span>
+m_ult.<span class="hljs-built_in">AddEffect</span>(std::<span class="hljs-built_in">make_unique</span>&lt;WhirlpoolSpeedBoostEffect&gt;(&amp;param.ultWhirlpoolBoostMultiplier));
+<span class="hljs-keyword">if</span> (param.ultBearAttackNullify)
+{
+    m_ult.<span class="hljs-built_in">AddEffect</span>(std::<span class="hljs-built_in">make_unique</span>&lt;BearAttackNullifyEffect&gt;());
+}
+m_ultVisual = std::<span class="hljs-built_in">make_unique</span>&lt;UltEffectCluster&gt;();  <span class="hljs-comment">// ウルト演出（ビジュアル）は効果と分離して所有</span>
+</div></code></pre>
+<p>この設計により、新しい陣形やウルト効果を追加する際も既存クラスを一切変更せず、<code>FormationEffects.h</code> に効果クラスを1つ追加して陣形のコンストラクタで組み合わせるだけで済むようになっています。</p>
+<h4 id="ultcontrollerによる発動タイマー管理">UltControllerによる発動・タイマー管理</h4>
+<p><code>UltController</code> はこのエフェクトチェーンと演出（<code>IUltEffect</code>、非所有ポインタ）を受け取り、発動・毎フレーム更新・クールダウン管理を担当します。効果と演出の所有権はどちらも <code>IFormation</code> 側が持ち、<code>UltController</code> は陣形切り替え時に <code>SetUlt()</code> で参照を差し替えるだけにすることで、陣形をまたいだウルトの状態遷移でも安全に破棄・切り替えができるようにしています。<br>
+また、チャージ中（クールダウン中）とディスチャージ中（発動中）のループSEの再生・停止も <code>UltController</code> 側で状態同期しており、シーン破棄時だけでなく、それを経由しない破棄経路でも鳴りっぱなしにならないようデストラクタで明示的に停止する保険を入れています。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="陣形ui">陣形UI</h3>
+<table>
+<thead>
+<tr>
+<th>ウルトチャージ中</th>
+<th>ウルト発動可能</th>
+<th>ウルト発動中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="Assets/Ult_Charge.gif" width="600"></td>
+<td><img src="Assets/Ult_CanActive.gif" width="600"></td>
+<td><img src="Assets/Ult_Active.gif" width="600"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="formationwheelmenu陣形切り替えウルトゲージの表示">FormationWheelMenu：陣形切り替え・ウルトゲージの表示</h4>
+<p>画面下部に現在の陣形アイコンを中央に大きく表示し、その左右にLB/RBで切り替わる陣形アイコンを並べるUIを実装しました。切り替え中は各アイコンが横方向にスライドするアニメーションを行い（<code>FormationController::IsSwitchingFormation()</code> と連動して連続入力をロック）、LT/RTのウルトアイコンはウルト発動可能な間だけ通常色、それ以外はグレーアウトします。座標・サイズ・色などの見た目パラメーターは <code>FormationWheelTuning.json</code> からホットリロードで調整できるようにし、デザイン確認のたびにビルドし直す手間を無くしました。</p>
+<h4 id="linearfillgaugeアイコンの形を保ったまま塗りつぶすゲージシェーダー">LinearFillGauge：アイコンの形を保ったまま塗りつぶすゲージシェーダー</h4>
+<p>ウルトのクールダウンゲージには、アイコンの絵柄を保ったまま下から上へ色が塗り上がっていく表現が欲しかったため、専用シェーダー <code>LinearFillGauge.fx</code> を新規実装しました。</p>
+<pre class="hljs"><code><div>// UV.y は 0(画像の上端) 〜 1(画像の下端)。下端から g_fillAmount の割合だけ塗りつぶす
+float fillLine = 1.0f - g_fillAmount;
+float fillMask = smoothstep(fillLine - AA, fillLine + AA, In.uv.y);
+float4 tint = lerp(g_baseColor, g_fillColor, fillMask);
+float4 color = float4(tint.rgb, tint.a * texAlpha);
+</div></code></pre>
+<p>テクスチャのアルファ値（アイコンの形）はそのまま活かしつつ、UV.y方向のしきい値を <code>smoothstep</code> で滑らかにブレンドすることで、スケールを変えずにアンチエイリアスのかかった塗り分けを実現しています。BeastEngine側には対応する <code>LinearFillGaugeRender</code>（<code>IRenderer</code> 派生）を追加し、ゲーム側からは <code>UIParts.h</code> の <code>UILinearFillGauge</code> を通して他のUI部品と同じ感覚で <code>SetFillAmount()</code> を呼ぶだけで使えるようにしました。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="レベルアップ演出">レベルアップ演出</h3>
+ <img src="Assets/LevelUp.gif" width="600">
+<p>陣形のリングが満員になり陣形レベルが上がった瞬間、親ペンギンの頭上にアイコンを表示する <code>LevelUpIconMenu</code> を実装しました。ワールド座標をスクリーン座標に変換して追従させつつ、上昇移動とフェードイン→待機→フェードアウトを行います。色のフェード自体は既存の <code>UIColorAnimation</code> に任せ、<code>LevelUpIconMenu</code> 側はフェードイン用アニメーションからフェードアウト用アニメーションへ差し替えるタイミング管理と移動更新だけに責務を絞ることで、既存のUIアニメーション基盤を再利用しつつ演出固有のロジックを薄く保っています。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h3 id="フィーバータイム">フィーバータイム</h3>
+ <img src="Assets/Fever.gif" width="600">
+<p>ステージ上の子ペンギンを全員捕獲した瞬間、または残り時間が一定を下回った瞬間のどちらか早い方で発生する「フィーバータイム」を実装しました。<code>FeverTimeManager</code> が発生条件の判定と、上空からの子ペンギン投下キューの管理（1回のフィーバーで投下する総数の上限、捕獲するたびにキューへ積み増す挙動など）をまとめて担当します。</p>
+<p>フィーバー開始時には画面に「FEVER」の文字をF→E→V→E→Rの順に波打つようにジャンプさせながら登場させ、一定時間後に同じ順番でジャンプ退場させる演出を <code>FeverIconMenu</code> で実装しました。文字ごとに移動用のベジェ曲線とアルファ用のカーブを個別に持たせ、開始タイミングをずらして再生することで、文字が連鎖的にジャンプしているように見えるようにしています。</p>
+<p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
+<hr>
+<h2 id="5-パフォーマンス最適化その他機能">5. パフォーマンス最適化・その他機能</h2>
 <h3 id="フラスタムカリング">フラスタムカリング</h3>
  <img src="Assets/FrustumCulling.gif" width="600">
 <p>※分かりやすくするために、デバッグ用にフラスタムの範囲を狭めています。<br>
@@ -1079,14 +1259,14 @@ CPUにReadbackした波高さキャッシュは、チャンクAABBの構築に�
 <table>
 <thead>
 <tr>
-<th>フラスタムカリングON</th>
 <th>フラスタムカリングOFF</th>
+<th>フラスタムカリングON</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><img src="Assets/FPS_Fast.gif" width="600"></td>
 <td><img src="Assets/FPS_Slow.gif" width="600"></td>
+<td><img src="Assets/FPS_Fast.gif" width="600"></td>
 </tr>
 </tbody>
 </table>
@@ -1175,7 +1355,7 @@ AABBが視錐台と交差している場合は、さらに <strong>トライア�
 <code>DangerArrowSystem</code> と <code>TutorialController</code> の両方がこのヘッダーを参照することで、<strong>チュートリアルの矢印と実戦の矢印が常に同じ位置・角度で表示される</strong>ことを保証しています。</p>
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 <hr>
-<h2 id="5-開発プロセスボツ案">5. 開発プロセス・ボツ案</h2>
+<h2 id="6-開発プロセスボツ案">6. 開発プロセス・ボツ案</h2>
 <h3 id="未使用機能">未使用機能</h3>
 <p>実装はしていますが、今作では使用していない機能です。</p>
 <h4 id="リムライト">リムライト</h4>
@@ -1187,6 +1367,5 @@ AABBが視錐台と交差している場合は、さらに <strong>トライア�
 今作のアートスタイルには合わなかったため、使用していません。</p>
 <p><a href="#%E7%9B%AE%E6%AC%A1">⇑目次に戻る</a></p>
 
-<script src="snow.js"></script>
 </body>
 </html>
