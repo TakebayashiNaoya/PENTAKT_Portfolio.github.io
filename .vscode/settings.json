@@ -1,8 +1,4 @@
 {
-    "markdown-pdf.styles": [
-        "./style.css"
-    ],
     "markdown-pdf.includeDefaultStyles": true,
-    "markdown-pdf.sanitize": "none",
-    "markdown-pdf.stylesRelativePathFile": true
+    "markdown-pdf.sanitize": "gfm-allow-style"
 }

@@ -1,3 +1,301 @@
+<style>
+/* ===== 雪国テーマ（CSS-only・JavaScript不要） ===== */
+
+html::before,
+html::after {
+    content: '';
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 0;
+}
+
+html::before {
+    box-shadow:
+         5vw   3vh rgba(255,255,255,0.80),
+        11vw  18vh rgba(255,255,255,0.55),
+        19vw  34vh rgba(255,255,255,0.70),
+        26vw   7vh rgba(255,255,255,0.60),
+        33vw  52vh rgba(255,255,255,0.80),
+        40vw  22vh rgba(255,255,255,0.50),
+        47vw  68vh rgba(255,255,255,0.75),
+        54vw  43vh rgba(255,255,255,0.60),
+        61vw  87vh rgba(255,255,255,0.55),
+        68vw  11vh rgba(255,255,255,0.80),
+        75vw  57vh rgba(255,255,255,0.65),
+        82vw  29vh rgba(255,255,255,0.70),
+        89vw  73vh rgba(255,255,255,0.50),
+        95vw  44vh rgba(255,255,255,0.75),
+         2vw  61vh rgba(255,255,255,0.60),
+         9vw  82vh rgba(255,255,255,0.80),
+        16vw  36vh rgba(255,255,255,0.55),
+        23vw  96vh rgba(255,255,255,0.70),
+        30vw  15vh rgba(255,255,255,0.65),
+        37vw  79vh rgba(255,255,255,0.50);
+    animation: cssSnowFall 12s linear -4s infinite;
+}
+
+html::after {
+    box-shadow:
+         7vw  51vh rgba(255,255,255,0.60),
+        14vw   8vh rgba(255,255,255,0.75),
+        21vw  63vh rgba(255,255,255,0.55),
+        28vw  28vh rgba(255,255,255,0.80),
+        35vw  77vh rgba(255,255,255,0.50),
+        42vw  42vh rgba(255,255,255,0.70),
+        49vw  91vh rgba(255,255,255,0.65),
+        56vw  16vh rgba(255,255,255,0.80),
+        63vw  69vh rgba(255,255,255,0.55),
+        70vw  33vh rgba(255,255,255,0.75),
+        77vw  84vh rgba(255,255,255,0.60),
+        84vw  47vh rgba(255,255,255,0.70),
+        91vw   2vh rgba(255,255,255,0.80),
+        97vw  58vh rgba(255,255,255,0.50),
+         4vw  23vh rgba(255,255,255,0.65),
+        11vw  93vh rgba(255,255,255,0.75),
+        18vw  38vh rgba(255,255,255,0.55),
+        25vw  74vh rgba(255,255,255,0.70),
+        32vw  12vh rgba(255,255,255,0.60),
+        39vw  55vh rgba(255,255,255,0.80);
+    animation: cssSnowFall 17s linear -9s infinite;
+}
+
+@keyframes cssSnowFall {
+    from { transform: translateY(0); }
+    to   { transform: translateY(200vh); }
+}
+
+html {
+    background: linear-gradient(160deg, #102b4c 0%, #173761 30%, #264985 60%, #3566b0 100%);
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 36px auto 72px auto;
+    background: rgba(235, 246, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 22px;
+    box-shadow: 0 8px 48px rgba(0, 20, 60, 0.45), 0 0 0 1px rgba(160, 210, 250, 0.25);
+    padding: 52px 60px;
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    color: #1b2d3f;
+    line-height: 1.85;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #0b3560;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(to right, #4a9eda, #b0e0f5, #4a9eda) 1;
+    padding-bottom: 0.4em;
+    letter-spacing: 0.04em;
+}
+
+h2 {
+    font-size: 1.45em;
+    font-weight: bold;
+    color: #0b3560;
+    margin-top: 2.2em;
+    padding: 0.45em 1em;
+    background: linear-gradient(135deg, #cfe9ff 0%, #e8f6ff 100%);
+    border-left: 5px solid #4a9eda;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 2px 8px rgba(74, 158, 218, 0.12);
+}
+
+h3 {
+    font-size: 1.22em;
+    font-weight: bold;
+    color: #165b8a;
+    margin-top: 1.8em;
+    padding-bottom: 0.3em;
+    border-bottom: 2px dashed #9fd3f0;
+}
+
+h4 {
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #1d6fa5;
+    margin-top: 1.4em;
+}
+
+a {
+    color: #1d6fa5;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #0b3560;
+    text-decoration: underline;
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #4a9eda, #b0e0f5, #4a9eda, transparent);
+    margin: 2.2em 0;
+    border-radius: 2px;
+}
+
+img {
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 20, 60, 0.18);
+    display: block;
+    margin: 1.2em auto;
+}
+
+body > img:first-of-type {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(74, 158, 218, 0.18);
+    margin: 1.2em 0;
+}
+
+table > thead > tr > th {
+    background: linear-gradient(135deg, #2471a3, #4a9eda);
+    color: #fff;
+    padding: 11px 18px;
+    font-weight: bold;
+    text-align: left;
+    border: none;
+}
+
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+    padding: 9px 18px;
+    border: none;
+    border-top: 1px solid #cfe9ff;
+}
+
+table > tbody > tr:nth-child(even) > td {
+    background: rgba(160, 216, 245, 0.13);
+}
+
+table > tbody > tr:hover > td {
+    background: rgba(74, 158, 218, 0.09);
+    transition: background 0.2s;
+}
+
+pre {
+    background: #091829 !important;
+    border: 1px solid rgba(74, 158, 218, 0.3) !important;
+    border-radius: 14px !important;
+    padding: 22px 26px !important;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.22);
+}
+
+pre code {
+    background: transparent !important;
+    color: #c0e4f8 !important;
+    padding: 0;
+}
+
+:not(pre):not(.hljs) > code {
+    background: rgba(74, 158, 218, 0.13);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #0b3560;
+}
+
+details {
+    background: rgba(207, 233, 255, 0.35);
+    border: 1px solid #9fd3f0;
+    border-radius: 14px;
+    margin: 0.9em 0;
+    overflow: hidden;
+}
+
+details > summary {
+    padding: 13px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #0b3560;
+    background: linear-gradient(135deg, #cfe9ff, #e8f6ff);
+    user-select: none;
+    transition: background 0.2s;
+    border-radius: 14px;
+    list-style: none;
+}
+
+details > summary::before {
+    content: "▶ ";
+    font-size: 0.75em;
+    color: #4a9eda;
+}
+
+details[open] > summary {
+    border-radius: 14px 14px 0 0;
+}
+
+details[open] > summary::before {
+    content: "▼ ";
+}
+
+details > summary:hover {
+    background: linear-gradient(135deg, #b3d8f5, #cfe9ff);
+}
+
+details > ul {
+    padding: 14px 26px;
+    margin: 0;
+}
+
+blockquote {
+    background: rgba(160, 216, 245, 0.18);
+    border-left: 4px solid #4a9eda;
+    border-radius: 0 12px 12px 0;
+    padding: 12px 22px;
+}
+
+strong {
+    color: #0b3560;
+}
+
+ul li,
+ol li {
+    margin: 0.4em 0;
+}
+
+p > a[href*="%E7%9B%AE%E6%AC%A1"] {
+    display: inline-block;
+    padding: 4px 16px;
+    background: linear-gradient(135deg, #4a9eda, #7ec8e3);
+    color: #fff !important;
+    border-radius: 20px;
+    font-size: 0.85em;
+    margin-top: 0.6em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(74, 158, 218, 0.3);
+}
+
+p > a[href*="%E7%9B%AE%E6%AC%A1"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(74, 158, 218, 0.45);
+    text-decoration: none !important;
+}
+</style>
+
  <img src="Assets/PENTAKT.png" width="600">
 
 ---
