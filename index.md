@@ -301,7 +301,7 @@ p > a[href*="%E7%9B%AE%E6%AC%A1"]:hover {
 ---
 
 説明資料：https://takebayashinaoya.github.io/PENTAKT_Portfolio.github.io/  
-紹介動画：https://youtu.be/rVx5o2Aue9Y  
+紹介動画：https://youtu.be/0BpBAXA8obM?si=zHEJdHoWoKM-CmD1  
 ソースコード：https://github.com/TakebayashiNaoya/ProjectBeast  
 
 ---
